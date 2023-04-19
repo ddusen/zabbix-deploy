@@ -11,9 +11,10 @@ source 00_env
 # 安装sshpass
 function install_sshpass() {
     echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    # yum install -y sshpass
     # 离线安装
-    rpm -Uvh rpms/epel-release-7-14.noarch.rpm
-    rpm -Uvh rpms/sshpass-1.06-2.el7.x86_64.rpm
+    rpm -Uvh rpms/epel-release-7-14.noarch.rpm || true
+    rpm -Uvh rpms/sshpass-1.06-2.el7.x86_64.rpm || true
 }
 
 # 配置免密
