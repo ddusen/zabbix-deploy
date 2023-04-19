@@ -4,19 +4,10 @@
 #updated: 2023-04-19 12:00:00
 
 
-# 以下为安装 Cloudera 所需的环境变量
+# 以下为安装 Zabbix 所需的环境变量
 ## 控制日志颜色：灰色
 export CSTART="\033[36m"
 export CEND="\033[0m"
 
-## 文件名称
-export FILENAME="cloudera-parcels.6.3.1466458.tar.gz"
-
 ## 中控机 IP
-export CCC="10.0.5.224"
-
-## httpd server address
-export HTTPD_SERVER="http://10.0.5.224/cloudera-parcels"
-
-## MySQL
-export MYSQL_ROOT_PASSWD="@GennLife2015"
+export CCC="10.0.0.155"
