@@ -26,6 +26,13 @@ function start_docker() {
     systemctl enable docker.service
 }
 
+# 安装 docker compose
+function install_docker_compose() {
+    echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    tar -zxvf $ZABBIX_PARCELS/docker-compose.tar.gz -C /usr/local/bin/
+    chmod +x /usr/local/bin/docker-compose
+}
+
 function main() {
     echo -e "$CSTART>07_mysql.sh$CEND"
 
@@ -34,6 +41,9 @@ function main() {
 
     echo -e "$CSTART>>start_docker$CEND"
     start_docker
+
+    echo -e "$CSTART>>install_docker_compose$CEND"
+    install_docker_compose
 }
 
 main
