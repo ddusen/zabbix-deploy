@@ -27,5 +27,16 @@
 - [./03_init.sh](./03_init.sh)
 
 
+## 其它：
+1. docker 镜像导入导出
+```bash
+docker save --output mysql.8.0.33.tar mysql:8.0.33
+tar -zcvf mysql.8.0.33.tar.gz mysql.8.0.33.tar
+mv mysql.8.0.33.tar.gz /opt/zabbix-parcels/
+
+tar -zxvf /opt/zabbix-parcels/mysql.8.0.33.tar.gz -C /tmp/
+docker import /tmp/mysql.8.0.33.tar mysql:8.0.33
+```
+
 ## Refs:
 - Docker离线安装：https://www.cnblogs.com/xiongzaiqiren/p/16900429.html
