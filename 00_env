@@ -14,3 +14,6 @@ export CCC="10.0.0.155"
 
 ## Zabbix 软件包目录
 export ZABBIX_PARCELS="/opt/zabbix-parcels"
+
+## MySQL
+MYSQL_ROOT_PASSWD="234567"
