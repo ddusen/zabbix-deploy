@@ -15,7 +15,7 @@ function install_docker() {
     mkdir -p /tmp/docker-ce/rpm
     tar -zxvf $ZABBIX_PARCELS/docker-ce.rpm.tar.gz -C /tmp/docker-ce/rpm/
 
-    yum localinstall /tmp/docker-ce/rpm/*.rpm || true
+    yum localinstall -y /tmp/docker-ce/rpm/*.rpm || true
 }
 
 # 启动 docker
