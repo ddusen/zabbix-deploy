@@ -15,13 +15,12 @@ function install_docker() {
     mkdir -p /tmp/docker-ce/rpm
     tar -zxvf $ZABBIX_PARCELS/docker-ce.rpm.tar.gz -C /tmp/docker-ce/rpm/
 
-    yum localinstall /tmp/docker-ce/rpm/*.rpm
+    yum localinstall /tmp/docker-ce/rpm/*.rpm || true
 }
 
 # 启动 docker
 function start_docker() {
     echo -e "$CSTART>>>>$(hostname -I)$CEND"
-    systemctl start docker
     systemctl restart docker
     systemctl daemon-reload
     systemctl enable docker.service
