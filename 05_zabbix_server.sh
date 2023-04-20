@@ -26,7 +26,7 @@ function start_zabbix() {
 }
 
 function main() {
-    echo -e "$CSTART>05_zabbix.sh$CEND"
+    echo -e "$CSTART>05_zabbix_server.sh$CEND"
 
     echo -e "$CSTART>>config_zabbix$CEND"
     config_zabbix
