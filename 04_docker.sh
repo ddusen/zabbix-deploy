@@ -34,7 +34,7 @@ function install_docker_compose() {
 }
 
 function main() {
-    echo -e "$CSTART>07_mysql.sh$CEND"
+    echo -e "$CSTART>04_docker.sh$CEND"
 
     echo -e "$CSTART>>install_docker$CEND"
     install_docker
