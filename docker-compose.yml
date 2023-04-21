@@ -78,20 +78,6 @@ services:
       - zabbix-mysql
     networks:
       - zbx_net
-  zabbix-agent:
-    container_name: zabbix-agent
-    image: zabbix/zabbix-agent:6.0.16-centos
-    restart: always
-    ports:
-      - 10050:10050
-    environment:
-      - ZBX_HOSTNAME=Zabbix server
-      - ZBX_SERVER_HOST=zabbix-server-mysql
-      - ZBX_SERVER_PORT=10051
-    networks:
-      - zbx_net
-    volumes:
-      - /data/zabbix:/data/zabbix
 networks:
   zbx_net:
     driver: bridge
