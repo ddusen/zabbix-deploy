@@ -9,8 +9,8 @@
 export CSTART="\033[36m"
 export CEND="\033[0m"
 
-## 中控机 IP
-export CCC="10.0.0.155"
+## Server IP
+export ServerIP="10.0.0.155"
 
 ## Zabbix 软件包目录
 export ZABBIX_PARCELS="/opt/zabbix-parcels"

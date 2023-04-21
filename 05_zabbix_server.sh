@@ -9,7 +9,7 @@ set -e
 source 00_env
 
 # config zabbix
-function config_zabbix() {
+function config_server() {
     echo -e "$CSTART>>>>$(hostname -I)$CEND"
     mkdir -p /data/zabbix
     mkdir -p /data/zabbix/fonts
@@ -20,7 +20,7 @@ function config_zabbix() {
     mv /tmp/msty.ttf /data/zabbix/fonts/DejaVuSans.ttf
 }
 
-function start_zabbix() {
+function start_server() {
     echo -e "$CSTART>>>>$(hostname -I)$CEND"
     docker-compose -f docker-compose.yml up -d
 }
@@ -28,11 +28,11 @@ function start_zabbix() {
 function main() {
     echo -e "$CSTART>05_zabbix_server.sh$CEND"
 
-    echo -e "$CSTART>>config_zabbix$CEND"
-    config_zabbix
+    echo -e "$CSTART>>config_server$CEND"
+    config_server
 
-    echo -e "$CSTART>>start_zabbix$CEND"
-    start_zabbix
+    echo -e "$CSTART>>start_server$CEND"
+    start_server
 }
 
 main
