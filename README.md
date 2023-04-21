@@ -53,10 +53,10 @@ tar -zxvf /opt/zabbix-parcels/zabbix-web-nginx-mysql.6.0.16-centos.tar.gz -C /tm
 tar -zxvf /opt/zabbix-parcels/zabbix-server-mysql.6.0.16-centos.tar.gz -C /tmp/
 tar -zxvf /opt/zabbix-parcels/zabbix-java-gateway.6.0.16-centos.tar.gz -C /tmp/
 
-docker import /tmp/mysql.8.0.33.tar mysql:8.0.33
-docker import /tmp/zabbix-web-nginx-mysql.6.0.16-centos.tar zabbix/zabbix-web-nginx-mysql:6.0.16-centos
-docker import /tmp/zabbix-server-mysql.6.0.16-centos.tar zabbix/zabbix-server-mysql:6.0.16-centos
-docker import /tmp/zabbix-java-gateway.6.0.16-centos.tar zabbix/zabbix-java-gateway:6.0.16-centos
+docker load -t /tmp/mysql.8.0.33.tar
+docker load -t /tmp/zabbix-web-nginx-mysql.6.0.16-centos.tar
+docker load -t /tmp/zabbix-server-mysql.6.0.16-centos.tar
+docker load -t /tmp/zabbix-java-gateway.6.0.16-centos.tar
 ```
 
 ## Refs:
