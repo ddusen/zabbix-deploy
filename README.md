@@ -28,14 +28,40 @@
 
 
 ## 其它：
-1. docker 镜像导入导出
+1. docker 镜像导出
 ```bash
 docker save --output mysql.8.0.33.tar mysql:8.0.33
-tar -zcvf mysql.8.0.33.tar.gz mysql.8.0.33.tar
-mv mysql.8.0.33.tar.gz /opt/zabbix-parcels/
+docker save --output zabbix-web-nginx-mysql.6.0.16-centos.tar zabbix/zabbix-web-nginx-mysql:6.0.16-centos
+docker save --output zabbix-server-mysql.6.0.16-centos.tar zabbix/zabbix-server-mysql:6.0.16-centos
+docker save --output zabbix-agent.6.0.16-centos.tar zabbix/zabbix-agent:6.0.16-centos
+docker save --output zabbix-java-gateway.6.0.16-centos.tar zabbix/zabbix-java-gateway:6.0.16-centos
 
+tar -zcvf mysql.8.0.33.tar.gz mysql.8.0.33.tar
+tar -zcvf zabbix-web-nginx-mysql.6.0.16-centos.tar.gz zabbix-web-nginx-mysql.6.0.16-centos.tar
+tar -zcvf zabbix-server-mysql.6.0.16-centos.tar.gz zabbix-server-mysql.6.0.16-centos.tar
+tar -zcvf zabbix-agent.6.0.16-centos.tar.gz zabbix-agent.6.0.16-centos.tar
+tar -zcvf zabbix-java-gateway.6.0.16-centos.tar.gz zabbix-java-gateway.6.0.16-centos.tar
+
+mv mysql.8.0.33.tar.gz /opt/zabbix-parcels
+mv zabbix-web-nginx-mysql.6.0.16-centos.tar.gz /opt/zabbix-parcels
+mv zabbix-server-mysql.6.0.16-centos.tar.gz /opt/zabbix-parcels
+mv zabbix-agent.6.0.16-centos.tar.gz /opt/zabbix-parcels
+mv zabbix-java-gateway.6.0.16-centos.tar.gz /opt/zabbix-parcels
+```
+
+2. docker 镜像导入
+```bash
 tar -zxvf /opt/zabbix-parcels/mysql.8.0.33.tar.gz -C /tmp/
+tar -zxvf /opt/zabbix-parcels/zabbix-web-nginx-mysql.6.0.16-centos.tar.gz -C /tmp/
+tar -zxvf /opt/zabbix-parcels/zabbix-server-mysql.6.0.16-centos.tar.gz -C /tmp/
+tar -zxvf /opt/zabbix-parcels/zabbix-agent.6.0.16-centos.tar.gz -C /tmp/
+tar -zxvf /opt/zabbix-parcels/zabbix-java-gateway.6.0.16-centos.tar.gz -C /tmp/
+
 docker import /tmp/mysql.8.0.33.tar mysql:8.0.33
+docker import /tmp/zabbix-web-nginx-mysql.6.0.16-centos.tar zabbix/zabbix-web-nginx-mysql:6.0.16-centos
+docker import /tmp/zabbix-server-mysql.6.0.16-centos.tar zabbix/zabbix-server-mysql:6.0.16-centos
+docker import /tmp/zabbix-agent.6.0.16-centos.tar zabbix/zabbix-agent:6.0.16-centos
+docker import /tmp/zabbix-java-gateway.6.0.16-centos.tar zabbix/zabbix-java-gateway:6.0.16-centos
 ```
 
 ## Refs:
