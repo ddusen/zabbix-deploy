@@ -26,7 +26,7 @@ function config_agent() {
         echo -e "$CSTART>>>>$ipaddr$CEND";
         scp config/agent $ipaddr:/tmp/
         ssh -n $ipaddr "cp /etc/zabbix/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf.bak"
-        ssh -n $ipaddr "cp /etc/agent /etc/zabbix/zabbix_agentd.conf"
+        ssh -n $ipaddr "cp /tmp/agent /etc/zabbix/zabbix_agentd.conf"
     done
 }
 
