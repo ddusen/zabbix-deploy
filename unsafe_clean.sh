@@ -22,7 +22,7 @@ function identification() {
 # 清理所有服务器上的 zabbix 服务
 function clean_zabbix_server() {
     echo -e "$CSTART>>>>$(hostname -I)$CEND"
-    docker-compose -f docker-compose.yml up -d
+    docker-compose -f docker-compose.yml down
     rm -rf /data/zabbix/fonts
     rm -rf /data/zabbix/db
     rm -rf /data/zabbix/alertscripts
