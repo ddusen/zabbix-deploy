@@ -3,7 +3,7 @@ version: '3'
 services:
   zabbix-web-nginx-mysql:
     container_name: zabbix-web-nginx-mysql
-    image: zabbix/zabbix-web-nginx-mysql
+    image: zabbix/zabbix-web-nginx-mysql:6.0.16
     restart: always
     environment:
       - DB_SERVER_HOST=zabbix-mysql
@@ -47,7 +47,7 @@ services:
       - zbx_net
   zabbix-java-gateway:
     container_name: zabbix-java-gateway
-    image: zabbix/zabbix-java-gateway
+    image: zabbix/zabbix-java-gateway:6.0.16
     restart: always
     volumes:
       - /etc/localtime:/etc/localtime
@@ -56,7 +56,7 @@ services:
       - zbx_net
   zabbix-server-mysql:
     container_name: zabbix-server-mysql
-    image: zabbix/zabbix-server-mysql
+    image: zabbix/zabbix-server-mysql:6.0.16
     restart: always
     volumes:
       - zabbix-server-vol:/etc/zabbix
@@ -80,7 +80,7 @@ services:
       - zbx_net
   zabbix-agent:
     container_name: zabbix-agent
-    image: zabbix/zabbix-agent
+    image: zabbix/zabbix-agent:6.0.16
     restart: always
     ports:
       - 10050:10050
