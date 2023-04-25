@@ -59,6 +59,13 @@ docker load -i /tmp/zabbix-server-mysql.6.0.16-centos.tar
 docker load -i /tmp/zabbix-java-gateway.6.0.16-centos.tar
 ```
 
+3. zabbix 地址
+```bash
+http://10.0.0.155:8080/
+Admin
+zabbix
+```
+
 ## Refs:
 - Docker离线安装：https://www.cnblogs.com/xiongzaiqiren/p/16900429.html
 - Docker compose 安装 zabbix： https://juejin.cn/post/7085020149761179661
