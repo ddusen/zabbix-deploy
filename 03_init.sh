@@ -11,6 +11,7 @@ source 00_env
 # 安装一些基础软件，便于后续操作
 function install_base() {
     echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    rm -rf /tmp/*.rpm
     cp rpms/*.rpm /tmp/
     rpm -Uvh /tmp/*.rpm
 }
