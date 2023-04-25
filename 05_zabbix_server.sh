@@ -32,7 +32,7 @@ function init_server() {
     echo -e "$CSTART>>>>$(hostname -I)$CEND"
     docker exec -i zabbix-server-mysql cp /usr/share/doc/zabbix-server-mysql/create.sql.gz /data/zabbix/share/
     docker exec -i zabbix-server-mysql gunzip /data/zabbix/share/create.sql.gz || true
-    docker exec -i zabbix-mysql mysql -u zabbix -p zabbix zabbix < /data/zabbix/share/create.sql || true
+    docker exec -i zabbix-mysql mysql -uzabbix -pzabbix zabbix < /data/zabbix/share/create.sql || true
 }
 
 function main() {
