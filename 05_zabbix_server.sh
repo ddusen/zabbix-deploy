@@ -28,6 +28,12 @@ function start_server() {
     docker-compose -f docker-compose.yml up -d
 }
 
+function init_server() {
+    echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    docker exec -it zabbix-server-mysql cp /usr/share/doc/zabbix-server-mysql/create.sql.gz /data/zabbix/share/
+    docker exec -it zabbix-mysql zcat /data/zabbix/share/create.sql.gz | mysql -u zabbix -p zabbix123 zabbix
+}
+
 function main() {
     echo -e "$CSTART>05_zabbix_server.sh$CEND"
 
@@ -36,6 +42,9 @@ function main() {
 
     echo -e "$CSTART>>start_server$CEND"
     start_server
+
+    echo -e "$CSTART>>init_server$CEND"
+    init_server
 }
 
 main
