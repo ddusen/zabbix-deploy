@@ -9,6 +9,17 @@
 
 ## 前提
 
+1. 从公司云盘下载软件包 zabbix-parcels.6.0.16.20230425.tar.gz 到脚本执行机器中。
+- http://119.254.145.21:12225/owncloud/index.php/s/UKkJIruXsVg0fjc
+- 如果网盘链接失效，去网盘目录下找该包：03-大数据/02-Zabbix/zabbix-parcels.6.0.16.20230425.tar.gz
+
+2. 把压缩包解压到 /opt 目录下
+```bash
+tar -zxvf zabbix-parcels.6.0.16.20230425.tar.gz -C /opt/
+```
+
+*****
+
 ## 一、Zabbix 安装
 
 ### 0. 配置环境变量
@@ -26,6 +37,14 @@
 ### 3. 初始化系统环境
 - [./03_init.sh](./03_init.sh)
 
+### 4. 安装 Docker 和 Docker Compose
+- [./04_docker.sh](./04_docker.sh)
+
+### 5. 安装 Zabbix Server
+- [./05_zabbix_server.sh](./05_zabbix_server.sh)
+
+### 6. 安装 Zabbix Agent
+- [./06_zabbix_agent.sh](./06_zabbix_agent.sh)
 
 ## 其它：
 1. docker 镜像导出
