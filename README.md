@@ -61,3 +61,4 @@ docker load -t /tmp/zabbix-java-gateway.6.0.16-centos.tar
 
 ## Refs:
 - Docker离线安装：https://www.cnblogs.com/xiongzaiqiren/p/16900429.html
+- Docker compose 安装 zabbix： https://juejin.cn/post/7085020149761179661

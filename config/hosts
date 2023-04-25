@@ -2,7 +2,7 @@
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
 
-10.0.0.155 zabbix
+10.0.0.155 zabbix-server
 10.0.5.224 cdh-cm-01
 10.0.5.225 cdh-cm-02
 10.0.5.228 cdh-master-01
