@@ -15,7 +15,10 @@ function config_server() {
     mkdir -p /data/zabbix/fonts
     mkdir -p /data/zabbix/db
     mkdir -p /data/zabbix/alertscripts
+    mkdir -p /data/zabbix/share
 
+    chmod -R 777 /data/zabbix/share
+    
     tar -zxvf $ZABBIX_PARCELS/msty.ttf.tar.gz -C /tmp/
     mv /tmp/msty.ttf /data/zabbix/fonts/DejaVuSans.ttf
 }
