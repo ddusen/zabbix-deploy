@@ -10,10 +10,8 @@ export CSTART="\033[36m"
 export CEND="\033[0m"
 
 ## Server IP
-export ServerIP="10.0.0.155"
+export ServerIP='10.0.1.67'
+export ServerHostname='zabbix-server'
 
 ## Zabbix 软件包目录
 export ZABBIX_PARCELS="/opt/zabbix-parcels"
-
-## MySQL
-MYSQL_ROOT_PASSWD="234567"

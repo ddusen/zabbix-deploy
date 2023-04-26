@@ -17,7 +17,9 @@ function config_hosts() {
 # 配置当前节点的 hostname
 function config_hostname() {
     echo -e "$CSTART>>>>$(hostname -I)$CEND"
-    echo 'hostname=zabbix-server' > /etc/sysconfig/network
+    echo "hostname=$ServerHostname" > /etc/sysconfig/network
+    echo "$ServerHostname" > /etc/hostname
+    hostnamectl set-hostname $ServerHostname
 }
 
 function main() {
