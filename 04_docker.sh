@@ -33,6 +33,20 @@ function install_docker_compose() {
     chmod +x /usr/local/bin/docker-compose
 }
 
+# load docker images
+function load_docker_images() {
+    echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    tar -zxvf /opt/zabbix-parcels/mysql.8.0.33.tar.gz -C /tmp/
+    tar -zxvf /opt/zabbix-parcels/zabbix-web-nginx-mysql.6.0.16-centos.tar.gz -C /tmp/
+    tar -zxvf /opt/zabbix-parcels/zabbix-server-mysql.6.0.16-centos.tar.gz -C /tmp/
+    tar -zxvf /opt/zabbix-parcels/zabbix-java-gateway.6.0.16-centos.tar.gz -C /tmp/
+
+    docker load -i /tmp/mysql.8.0.33.tar
+    docker load -i /tmp/zabbix-web-nginx-mysql.6.0.16-centos.tar
+    docker load -i /tmp/zabbix-server-mysql.6.0.16-centos.tar
+    docker load -i /tmp/zabbix-java-gateway.6.0.16-centos.tar
+}
+
 function main() {
     echo -e "$CSTART>04_docker.sh$CEND"
 
@@ -44,6 +58,9 @@ function main() {
 
     echo -e "$CSTART>>install_docker_compose$CEND"
     install_docker_compose
+
+    echo -e "$CSTART>>load_docker_images$CEND"
+    load_docker_images
 }
 
 main
