@@ -23,6 +23,8 @@ services:
     depends_on:
       - zabbix-server-mysql
       - zabbix-mysql
+    extra_hosts:
+      - host.docker.internal:host-gateway
   zabbix-mysql:
     container_name: zabbix-mysql
     image: mysql:8.0.33
@@ -45,6 +47,8 @@ services:
       - /data/zabbix:/data/zabbix
     networks:
       - zbx_net
+    extra_hosts:
+      - host.docker.internal:host-gateway
   zabbix-java-gateway:
     container_name: zabbix-java-gateway
     image: zabbix/zabbix-java-gateway:6.0.16-centos
@@ -54,6 +58,8 @@ services:
       - /data/zabbix:/data/zabbix
     networks:
       - zbx_net
+    extra_hosts:
+      - host.docker.internal:host-gateway
   zabbix-server-mysql:
     container_name: zabbix-server-mysql
     image: zabbix/zabbix-server-mysql:6.0.16-centos
@@ -78,6 +84,8 @@ services:
       - zabbix-mysql
     networks:
       - zbx_net
+    extra_hosts:
+      - host.docker.internal:host-gateway
 networks:
   zbx_net:
     driver: bridge
