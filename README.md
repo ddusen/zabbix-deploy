@@ -46,6 +46,8 @@ tar -zxvf zabbix-parcels.6.0.16.20230426.tar.gz -C /opt/
 ### 6. 安装 Zabbix Agent
 - [./06_zabbix_agent.sh](./06_zabbix_agent.sh)
 
+*****
+
 ## 其它：
 1. docker 镜像导出
 ```bash
