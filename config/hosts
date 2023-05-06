@@ -1,14 +1,15 @@
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
+10.0.1.66 zabbix-server
 
-10.0.1.67 zabbix-server
-
-10.0.1.101 cdh-cm-01
-10.0.1.103 cdh-master-01
-10.0.1.104 cdh-master-02
-10.0.1.105 cdh-master-03
-10.0.1.106 cdh-data-01
-10.0.1.107 cdh-data-02
-10.0.1.108 cdh-data-03
-10.0.1.109 cdh-data-04
+10.0.1.71 cdh-cm-71
+10.0.1.72 cdh-master-72
+10.0.1.73 cdh-master-73
+10.0.1.74 cdh-data-74
+10.0.1.75 cdh-data-75
+10.0.1.76 cdh-data-76
+10.0.1.77 cdh-data-77
+10.0.1.78 cdh-78
+10.0.1.79 cdh-79
+10.0.1.80 cdh-80

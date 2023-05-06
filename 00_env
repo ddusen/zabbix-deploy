@@ -9,9 +9,10 @@
 export CSTART="\033[36m"
 export CEND="\033[0m"
 
-## Server IP
-export ServerIP='10.0.1.67'
+## Server 配置
+export ServerIP='10.0.1.66'
 export ServerHostname='zabbix-server'
+export ServerDataPath='/data'
 
 ## Zabbix 软件包目录
 export ZABBIX_PARCELS="/opt/zabbix-parcels"

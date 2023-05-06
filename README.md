@@ -87,7 +87,7 @@ docker load -i /tmp/zabbix-agent.6.0.16-centos.tar
 
 3. zabbix 地址
 ```bash
-http://10.0.0.155:8080/
+http://10.0.1.66:8080/
 Admin
 zabbix
 ```
