@@ -9,13 +9,13 @@
 
 ## 前提
 
-1. 从公司云盘下载软件包 zabbix-parcels.6.0.16.20230426.tar.gz 到脚本执行机器中。
-- http://119.254.145.21:12225/owncloud/index.php/s/ZcraldgmMM80wqk
-- 如果网盘链接失效，去网盘目录下找该包：03-大数据/02-Zabbix/zabbix-parcels.6.0.16.20230426.tar.gz
+1. 从公司云盘下载软件包 zabbix-parcels.6.0.16.20230508.tar.gz 到脚本执行机器中。
+- http://119.254.145.21:12225/owncloud/index.php/s/7csixr73eOy5Ihg
+- 如果网盘链接失效，去网盘目录下找该包：03-大数据/02-Zabbix/zabbix-parcels.6.0.16.20230508.tar.gz
 
 2. 把压缩包解压到 /opt 目录下
 ```bash
-tar -zxvf zabbix-parcels.6.0.16.20230426.tar.gz -C /opt/
+tar -zxvf zabbix-parcels.6.0.16.20230508.tar.gz -C /opt/
 ```
 
 *****
