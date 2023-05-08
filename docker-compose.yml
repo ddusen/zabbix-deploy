@@ -105,6 +105,7 @@ services:
       - TZ=Asia/Shanghai
     ports:
       - 3000:3000
+    user: '0'
     volumes:
       - /etc/localtime:/etc/localtime
       - $ServerDataPath/grafana/datasources:/etc/grafana/provisioning/datasources
