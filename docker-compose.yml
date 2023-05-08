@@ -108,8 +108,9 @@ services:
     user: '0'
     volumes:
       - /etc/localtime:/etc/localtime
-      - $ServerDataPath/grafana/datasources:/etc/grafana/provisioning/datasources
       - $ServerDataPath/grafana/data:/var/lib/grafana
+      - $ServerDataPath/grafana/plugins:/var/lib/grafana/plugins
+      - $ServerDataPath/grafana/datasources:/etc/grafana/provisioning/datasources      
       - $ServerDataPath/zabbix/share:/data/zabbix/share
     networks:
       - zbx_net

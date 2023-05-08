@@ -97,6 +97,9 @@ Admin
 zabbix
 ```
 
+4. grafana 配置 zabbix
+- zabbix api: http://10.0.0.155:8080/api_jsonrpc.php
+
 ## Refs:
 - Docker离线安装：https://www.cnblogs.com/xiongzaiqiren/p/16900429.html
 - Docker compose 安装 zabbix： https://juejin.cn/post/7085020149761179661

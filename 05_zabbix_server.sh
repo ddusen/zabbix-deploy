@@ -16,12 +16,16 @@ function config_server() {
     mkdir -p $ServerDataPath/zabbix/db
     mkdir -p $ServerDataPath/zabbix/alertscripts
     mkdir -p $ServerDataPath/zabbix/share
-    mkdir -p $ServerDataPath/grafana/datasources
     mkdir -p $ServerDataPath/grafana/data
+    mkdir -p $ServerDataPath/grafana/datasources
+    mkdir -p $ServerDataPath/grafana/plugins
+
     chmod -R 777 $ServerDataPath/zabbix/share
     
     tar -zxvf $ZABBIX_PARCELS/msty.ttf.tar.gz -C /tmp/
     mv /tmp/msty.ttf $ServerDataPath/zabbix/fonts/DejaVuSans.ttf
+
+    tar -zxvf $ZABBIX_PARCELS/alexanderzobnin-zabbix-app.tar.gz -C $ServerDataPath/grafana/plugins/
 }
 
 function start_server() {
