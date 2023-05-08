@@ -99,6 +99,17 @@ zabbix
 
 4. grafana 配置 zabbix
 - zabbix api: http://10.0.0.155:8080/api_jsonrpc.php
+- grafana web: http://10.0.1.67:3000/d/zabbix/all-server-status
+```bash
+管理员账号：
+admin
+admin
+只读账号：
+readonly
+readonly
+```
+
+![grafana](./images/grafana.png)
 
 ## Refs:
 - Docker离线安装：https://www.cnblogs.com/xiongzaiqiren/p/16900429.html
