@@ -1,4 +1,4 @@
-10.0.1.71 cdh-cm-71 @Vitark6388
+10.0.1.71 cdh-cm-71 @Dev1111
 10.0.1.72 cdh-master-72 @Dev1111
 10.0.1.73 cdh-master-73 @Dev1111
 10.0.1.74 cdh-data-74 @Dev1111
@@ -16,3 +16,4 @@
 10.0.1.186 new-gp-186 @Dev1111
 10.0.1.187 new-gp-187 @Dev1111
 10.0.1.188 new-gp-188 @Dev1111
+10.0.1.66 zabbix-server @Dev1111

@@ -10,7 +10,11 @@ source 00_env
 
 function remove_old_agent() {
     cat config/vm_info | while read ipaddr name passwd
-    do 
+    do
+        # 不在zabbix server上安装agent
+        if [[ "$ipaddr" == "$ServerIP" ]]; then
+            continue
+        fi
         echo -e "$CSTART>>>>$ipaddr$CEND";
         ssh -n $ipaddr "yum remove -y zabbix*" || true
         ssh -n $ipaddr "rm -rf /etc/zabbix*" || true
@@ -21,6 +25,10 @@ function remove_old_agent() {
 function install_agent() {
     cat config/vm_info | while read ipaddr name passwd
     do 
+        # 不在zabbix server上安装agent
+        if [[ "$ipaddr" == "$ServerIP" ]]; then
+            continue
+        fi
         echo -e "$CSTART>>>>$ipaddr$CEND";
         scp rpms/pcre2-10.23-2.el7.x86_64.rpm $ipaddr:/tmp/
         scp rpms/zabbix-agent2-6.4.2-release1.el7.x86_64.rpm $ipaddr:/tmp/
@@ -33,6 +41,10 @@ function install_agent() {
 function config_agent() {
     cat config/vm_info | while read ipaddr name passwd
     do 
+        # 不在zabbix server上安装agent
+        if [[ "$ipaddr" == "$ServerIP" ]]; then
+            continue
+        fi
         echo -e "$CSTART>>>>$ipaddr$CEND";
         scp config/agent $ipaddr:/tmp/
         ssh -n $ipaddr "cp /etc/zabbix/zabbix_agent2.conf /etc/zabbix/zabbix_agent2.conf.bak"
@@ -44,6 +56,10 @@ function config_agent() {
 function start_agent() {
     cat config/vm_info | while read ipaddr name passwd
     do 
+        # 不在zabbix server上安装agent
+        if [[ "$ipaddr" == "$ServerIP" ]]; then
+            continue
+        fi
         echo -e "$CSTART>>>>$ipaddr$CEND";
         ssh -n $ipaddr "systemctl restart zabbix-agent2; systemctl enable zabbix-agent2"
     done
