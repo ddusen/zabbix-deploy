@@ -49,7 +49,8 @@ function config_agent() {
         scp config/agent $ipaddr:/tmp/
         ssh -n $ipaddr "cp /etc/zabbix/zabbix_agent2.conf /etc/zabbix/zabbix_agent2.conf.bak"
         ssh -n $ipaddr "cp /tmp/agent /etc/zabbix/zabbix_agent2.conf"
-        ssh -n $ipaddr "sed -i 's/ZabbixClentHostname/$(hostname)/g' /etc/zabbix/zabbix_agent2.conf"
+        ssh -n $ipaddr "sed -i 's/ZabbixServerIP/$ServerIP/g' /etc/zabbix/zabbix_agent2.conf"
+        ssh -n $ipaddr 'sed -i "s/ZabbixClentHostname/$(hostname)/g" /etc/zabbix/zabbix_agent2.conf'
     done
 }
 

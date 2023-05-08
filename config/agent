@@ -1,8 +1,8 @@
 PidFile=/var/run/zabbix/zabbix_agent2.pid
 LogFile=/var/log/zabbix/zabbix_agent2.log
 LogFileSize=0
-Server=10.0.1.66
-ServerActive=10.0.1.66
+Server=ZabbixServerIP
+ServerActive=ZabbixServerIP
 Hostname=ZabbixClentHostname
 RefreshActiveChecks=120
 BufferSize=200
