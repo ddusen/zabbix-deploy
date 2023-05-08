@@ -23,10 +23,10 @@ function identification() {
 function clean_zabbix_server() {
     echo -e "$CSTART>>>>$(hostname -I)$CEND"
     docker-compose -f docker-compose.yml down
-    rm -rf /data/zabbix/fonts
-    rm -rf /data/zabbix/db
-    rm -rf /data/zabbix/alertscripts
-    rm -rf /data/zabbix
+    rm -rf $ServerDataPath/zabbix/fonts
+    rm -rf $ServerDataPath/zabbix/db
+    rm -rf $ServerDataPath/zabbix/alertscripts
+    rm -rf $ServerDataPath/zabbix
 }
 
 function main() {
