@@ -23,6 +23,7 @@ function install_base() {
 function set_timezone() {
     cat config/vm_info | while read ipaddr name passwd
     do
+        echo -e "$CSTART>>>>$ipaddr$CEND"
         # 创建时区软链接
         ssh -n $ipaddr "ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime" || true
         # 如果软链接已经存在，修改它，避免第一步失败
@@ -58,6 +59,7 @@ function disable_hugepage() {
 function disable_selinux() {
     cat config/vm_info | while read ipaddr name passwd
     do
+        echo -e "$CSTART>>>>$ipaddr$CEND"
         ssh -n $ipaddr "sed -i '/^SELINUX=/cSELINUX=disabled' /etc/selinux/config"
     done
 }
@@ -66,6 +68,7 @@ function disable_selinux() {
 function disable_swap() {
     cat config/vm_info | while read ipaddr name passwd
     do
+        echo -e "$CSTART>>>>$ipaddr$CEND"
         ssh -n $ipaddr "sed -i '/swap / s/^\(.*\)$/#\1/g' /etc/fstab"
         ssh -n $ipaddr "sed -i '/swappiness/d' /etc/sysctl.conf"
         ssh -n $ipaddr "echo 'vm.swappiness=0' >> /etc/sysctl.conf"
