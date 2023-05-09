@@ -109,9 +109,6 @@ readonly
 readonly
 ```
 
-*****
-## Examples:
-
 ![grafana](./images/grafana-01.png)
 ![grafana](./images/grafana-02.png)
 ![grafana](./images/grafana-03.png)
