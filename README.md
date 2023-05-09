@@ -2,7 +2,11 @@
 
 先在一台机器安装 Server，然后在其他机器安装 Agent
 
-- Zabbix 版本：6.0.16
+- Zabbix Server 版本：6.0.16
+- Zabbix Agent2 版本：6.4.2
+- Grafana 版本：9.5.1
+- Docker 版本：23.0.4
+- DockerCompose 版本：1.23.2
 - 系统版本：Centos 7.6
 
 *****
