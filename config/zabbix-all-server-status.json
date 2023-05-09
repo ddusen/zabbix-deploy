@@ -3681,7 +3681,7 @@
           "queryType": "group"
         },
         "refresh": 1,
-        "regex": "/Linux|Windows|Zabbix|CDH|GP/",
+        "regex": "/Linux|Zabbix|CDH|GP|K8s|Dolphin/",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",

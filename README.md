@@ -109,7 +109,16 @@ readonly
 readonly
 ```
 
-![grafana](./images/grafana.png)
+*****
+## Examples:
+
+![grafana](./images/grafana-01.png)
+![grafana](./images/grafana-02.png)
+![grafana](./images/grafana-03.png)
+![grafana](./images/grafana-04.png)
+![grafana](./images/grafana-05.png)
+![grafana](./images/grafana-06.png)
+![grafana](./images/grafana-07.png)
 
 ## Refs:
 - Docker离线安装：https://www.cnblogs.com/xiongzaiqiren/p/16900429.html
