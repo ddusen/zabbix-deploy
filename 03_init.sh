@@ -21,6 +21,7 @@ function install_base() {
         ssh -n $ipaddr "rpm -Uvh /tmp/htop-2.2.0-3.el7.x86_64.rpm" || true
         ssh -n $ipaddr "rpm -Uvh /tmp/iotop-0.6-4.el7.noarch.rpm" || true
         
+        ssh -n $ipaddr "rm -rf /etc/yum.repos.d/epel*"
         ssh -n $ipaddr "yum install -y vim wget net-tools" || true
     done
 }
