@@ -26,6 +26,15 @@ function install_base() {
     done
 }
 
+# 备份一些配置文件
+function backup_configs() {
+    cat config/vm_info | while read ipaddr name passwd
+    do 
+        echo -e "$CSTART>>>>$ipaddr$CEND"
+        ssh -n $ipaddr "mkdir -p /opt/backup/configs_$(date '+%Y%m%d')"
+    done
+}
+
 # 设置时区为 Asia/Shanghai
 function set_timezone() {
     cat config/vm_info | while read ipaddr name passwd
@@ -38,27 +47,14 @@ function set_timezone() {
     done
 }
 
-# 备份一些配置文件
-function backup_configs() {
-    cat config/vm_info | while read ipaddr name passwd
-    do 
-        echo -e "$CSTART>>>>$ipaddr$CEND"
-        ssh -n $ipaddr "mkdir -p /opt/backup/configs_$(date '+%Y%m%d%H%M%S')"
-        ssh -n $ipaddr "cp /etc/security/limits.conf /opt/backup/configs_$(date '+%Y%m%d%H%M%S')"
-        ssh -n $ipaddr "cp /etc/security/limits.d/20-nproc.conf /opt/backup/configs_$(date '+%Y%m%d%H%M%S')"
-        ssh -n $ipaddr "cp /etc/sysctl.conf /opt/backup/configs_$(date '+%Y%m%d%H%M%S')"
-        ssh -n $ipaddr "cp /etc/ssh/sshd_config /opt/backup/configs_$(date '+%Y%m%d%H%M%S')"
-        ssh -n $ipaddr "cp /etc/fstab /opt/backup/configs_$(date '+%Y%m%d%H%M%S')"
-    done
-}
-
 # 禁用 hugepage
 function disable_hugepage() {
     cat config/vm_info | while read ipaddr name passwd
     do
         echo -e "$CSTART>>>>$ipaddr$CEND"
         ssh -n $ipaddr "grubby --update-kernel=ALL --args='transparent_hugepage=never'"
-        ssh -n $ipaddr "sed -i '/^#RemoveIPC=no/cRemoveIPC=no' /etc/systemd/logind.conf; systemctl restart systemd-logind.service"
+        ssh -n $ipaddr "sed -i '/^#RemoveIPC=no/cRemoveIPC=no' /etc/systemd/logind.conf"
+        ssh -n $ipaddr "systemctl restart systemd-logind.service"
     done
 }
 
@@ -67,27 +63,27 @@ function disable_selinux() {
     cat config/vm_info | while read ipaddr name passwd
     do
         echo -e "$CSTART>>>>$ipaddr$CEND"
+        ssh -n $ipaddr "cp /etc/selinux/config /opt/backup/configs_$(date '+%Y%m%d')/etc_selinux_config"
         ssh -n $ipaddr "sed -i '/^SELINUX=/cSELINUX=disabled' /etc/selinux/config"
     done
 }
 
-# 关闭 swap
-function disable_swap() {
+# 配置 limits.conf
+function config_limits() {
     cat config/vm_info | while read ipaddr name passwd
     do
         echo -e "$CSTART>>>>$ipaddr$CEND"
-        ssh -n $ipaddr "sed -i '/swap / s/^\(.*\)$/#\1/g' /etc/fstab"
-        ssh -n $ipaddr "sed -i '/swappiness/d' /etc/sysctl.conf"
-        ssh -n $ipaddr "echo 'vm.swappiness=0' >> /etc/sysctl.conf"
-        ssh -n $ipaddr "swapoff -a"
+        ssh -n $ipaddr "ulimit -Hn 65536"
+        ssh -n $ipaddr "ulimit -n 65536"
     done
 }
 
-# 配置ssh
+# 配置 ssh
 function config_ssh() {
     cat config/vm_info | while read ipaddr name passwd
     do
         echo -e "$CSTART>>>>$ipaddr$CEND"
+        ssh -n $ipaddr "cp /etc/ssh/sshd_config /opt/backup/configs_$(date '+%Y%m%d')/etc_ssh_sshd_config"
         ssh -n $ipaddr "sed -i '/^#UseDNS/cUseDNS no' /etc/ssh/sshd_config"
         ssh -n $ipaddr "sed -i '/^GSSAPIAuthentication/cGSSAPIAuthentication no' /etc/ssh/sshd_config"
         ssh -n $ipaddr "sed -i '/^GSSAPICleanupCredentials/cGSSAPICleanupCredentials no' /etc/ssh/sshd_config"
@@ -100,38 +96,54 @@ function config_network() {
     cat config/vm_info | while read ipaddr name passwd
     do
         echo -e "$CSTART>>>>$ipaddr$CEND"
-        ssh -n $ipaddr "chkconfig iptables off; chkconfig ip6tables off; chkconfig postfix off"
-        ssh -n $ipaddr "systemctl disable postfix; systemctl disable libvirtd; systemctl disable firewalld"
-        ssh -n $ipaddr "systemctl stop postfix; systemctl stop libvirtd; systemctl stop firewalld"
+        ssh -n $ipaddr "chkconfig iptables off; chkconfig ip6tables off; chkconfig postfix off" || true
+        ssh -n $ipaddr "systemctl disable postfix; systemctl disable libvirtd; systemctl disable firewalld" || true
+        ssh -n $ipaddr "systemctl stop postfix; systemctl stop libvirtd; systemctl stop firewalld" || true
+    done
+}
+
+# 关闭 swap
+function disable_swap() {
+    cat config/vm_info | while read ipaddr name passwd
+    do
+        echo -e "$CSTART>>>>$ipaddr$CEND"
+        ssh -n $ipaddr "cp /etc/fstab /opt/backup/configs_$(date '+%Y%m%d')"
+        ssh -n $ipaddr "sed -i '/swap / s/^\(.*\)$/#\1/g' /etc/fstab"
+        ssh -n $ipaddr "sed -i '/swappiness/d' /etc/sysctl.conf"
+        ssh -n $ipaddr "echo 'vm.swappiness=0' >> /etc/sysctl.conf"
+        ssh -n $ipaddr "swapoff -a"
     done
 }
 
 function main() {
     echo -e "$CSTART>03_init.sh$CEND"
-
+    
     echo -e "$CSTART>>install_base$CEND"
     install_base
-    
-    echo -e "$CSTART>>set_timezone$CEND"
-    set_timezone
-    
+
     echo -e "$CSTART>>backup_configs$CEND"
     backup_configs
 
-    echo -e "$CSTART>>stop_hugepage$CEND"
+    echo -e "$CSTART>>set_timezone$CEND"
+    set_timezone
+
+    echo -e "$CSTART>>disable_hugepage$CEND"
     disable_hugepage
 
     echo -e "$CSTART>>disable_selinux$CEND"
     disable_selinux
 
-    echo -e "$CSTART>>disable_swap$CEND"
-    disable_swap
+    echo -e "$CSTART>>config_limits$CEND"
+    config_limits
 
     echo -e "$CSTART>>config_ssh$CEND"
     config_ssh
 
     echo -e "$CSTART>>config_network$CEND"
-    config_network || true # 忽略报错
+    config_network
+
+    echo -e "$CSTART>>disable_swap$CEND"
+    disable_swap
 }
 
 main
