@@ -19,7 +19,7 @@ function identification() {
     fi
 }
 
-# 清理所有服务器上的 zabbix 服务
+# 清理 zabbix server
 function clean_zabbix_server() {
     echo -e "$CSTART>>>>$(hostname -I)$CEND"
     docker-compose -f docker-compose.yml down
@@ -27,6 +27,17 @@ function clean_zabbix_server() {
     rm -rf $ServerDataPath/zabbix/db
     rm -rf $ServerDataPath/zabbix/alertscripts
     rm -rf $ServerDataPath/zabbix
+}
+
+# 清理 zabbix agent
+function clean_zabbix_agent() {
+    cat config/vm_info | while read ipaddr name passwd
+    do
+        echo -e "$CSTART>>>>$ipaddr$CEND";
+        ssh -n $ipaddr "yum remove -y zabbix*" || true
+        ssh -n $ipaddr "rm -rf /etc/zabbix*" || true
+        ssh -n $ipaddr "rm -rf /var/log/zabbix*" || true
+    done 
 }
 
 function main() {
@@ -37,6 +48,9 @@ function main() {
 
     echo -e "$CSTART>>clean_zabbix_server$CEND"
     clean_zabbix_server || true
+
+    echo -e "$CSTART>>clean_zabbix_agent$CEND"
+    clean_zabbix_agent || true
 }
 
 main
