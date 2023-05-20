@@ -65,6 +65,7 @@ function disable_selinux() {
         echo -e "$CSTART>>>>$ipaddr$CEND"
         ssh -n $ipaddr "cp /etc/selinux/config /opt/backup/configs_$(date '+%Y%m%d')/etc_selinux_config"
         ssh -n $ipaddr "sed -i '/^SELINUX=/cSELINUX=disabled' /etc/selinux/config"
+        ssh -n $ipaddr "setenforce 0" || true
     done
 }
 
