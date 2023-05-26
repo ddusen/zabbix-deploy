@@ -7,7 +7,7 @@
 - Grafana 版本：9.5.1
 - Docker 版本：23.0.4
 - DockerCompose 版本：1.23.2
-- 系统版本：Centos 7.6
+- 系统版本：Centos 6* / Centos 7* / Rocky 8*
 
 *****
 
