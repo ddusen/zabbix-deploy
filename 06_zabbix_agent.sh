@@ -66,7 +66,8 @@ function config_agent() {
         fi
         echo -e "$CSTART>>>>$ipaddr$CEND";
         scp config/agent2 $ipaddr:/tmp/
-        ssh -n $ipaddr "cp /etc/zabbix/zabbix_agent2.conf /etc/zabbix/zabbix_agent2.conf.bak"
+        ssh -n $ipaddr "mkdir -p /etc/zabbix"
+        ssh -n $ipaddr "cp /etc/zabbix/zabbix_agent2.conf /etc/zabbix/zabbix_agent2.conf.bak" || true
         ssh -n $ipaddr "cp /tmp/agent2 /etc/zabbix/zabbix_agent2.conf"
         ssh -n $ipaddr "sed -i 's/ZabbixServerIP/$ServerIP/g' /etc/zabbix/zabbix_agent2.conf"
         ssh -n $ipaddr 'sed -i "s/ZabbixClentHostname/$(hostname)/g" /etc/zabbix/zabbix_agent2.conf'
@@ -81,7 +82,17 @@ function start_agent() {
             continue
         fi
         echo -e "$CSTART>>>>$ipaddr$CEND";
-        ssh -n $ipaddr "systemctl restart zabbix-agent2; systemctl enable zabbix-agent2"
+        system_version=$(ssh -n $ipaddr "cat /etc/centos-release | sed 's/ //g'")
+        echo -e "$CSTART>>>>$ipaddr>$system_version$CEND"
+        if [[ "$system_version" == CentOSrelease6* ]]; then
+            ssh -n $ipaddr "service zabbix-agent2 start" || true
+            ssh -n $ipaddr "service zabbix-agent2 restart" || true
+            ssh -n $ipaddr "chkconfig --level 35 zabbix-agent2 on" || true
+        else 
+            ssh -n $ipaddr "systemctl start zabbix-agent2" || true
+            ssh -n $ipaddr "systemctl restart zabbix-agent2" || true
+            ssh -n $ipaddr "systemctl enable zabbix-agent2" || true
+        fi
     done
 }
 
