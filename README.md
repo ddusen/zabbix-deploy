@@ -124,4 +124,4 @@ readonly
 ## Refs:
 - Docker离线安装：https://www.cnblogs.com/xiongzaiqiren/p/16900429.html
 - Docker compose 安装 zabbix： https://juejin.cn/post/7085020149761179661
-- Centos RPMS: http://bay.uchicago.edu/centos-vault/centos/6.10/os/x86_64/Packages/
+- Centos6 RPMS: http://bay.uchicago.edu/centos-vault/centos/6.10/os/x86_64/Packages/
