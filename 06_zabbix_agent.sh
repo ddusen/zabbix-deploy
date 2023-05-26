@@ -11,10 +11,6 @@ source 00_env
 function remove_old_agent() {
     cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
     do
-        # 不在zabbix server上安装agent
-        if [[ "$ipaddr" == "$ServerIP" ]]; then
-            continue
-        fi
         echo -e "$CSTART>>>>$ipaddr$CEND";
         ssh -n $ipaddr "yum remove -y zabbix*" || true
         ssh -n $ipaddr "rm -rf /etc/zabbix*" || true
