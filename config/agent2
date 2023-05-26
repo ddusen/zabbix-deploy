@@ -1,0 +1,16 @@
+# This is a configuration file for Zabbix agent 2 (Unix)
+PidFile=/var/run/zabbix/zabbix_agent2.pid
+LogFile=/var/log/zabbix/zabbix_agent2.log
+
+LogFileSize=100
+Server=ZabbixServerIP
+ServerActive=ZabbixServerIP
+Hostname=ZabbixClentHostname
+RefreshActiveChecks=120
+BufferSize=200
+Timeout=5
+
+Include=/etc/zabbix/zabbix_agent2.d/*.conf
+PluginSocket=/var/run/zabbix/agent.plugin.sock
+ControlSocket=/var/run/zabbix/agent.sock
+Include=./zabbix_agent2.d/plugins.d/*.conf

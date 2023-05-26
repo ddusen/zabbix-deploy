@@ -45,6 +45,12 @@ function install_agent() {
 
             ssh -n $ipaddr "rpm -Uvh /tmp/pcre2-10.23-2.el7.x86_64.rpm" || true
             ssh -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release1.el7.x86_64.rpm" || true
+        elif [[ "$system_version" == CentOSrelease6* ]]; then
+            scp rpms/centos6/pcre-7.8-7.el6.x86_64.rpm $ipaddr:/tmp/
+            scp rpms/centos6/zabbix-agent2-6.4.2-release3.el6.x86_64.rpm $ipaddr:/tmp/
+
+            ssh -n $ipaddr "rpm -Uvh /tmp/pcre-7.8-7.el6.x86_64.rpm" || true
+            ssh -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release3.el6.x86_64.rpm" || true
         else 
             echo "系统版本[$system_version]超出脚本处理范围" && false
         fi
@@ -59,9 +65,9 @@ function config_agent() {
             continue
         fi
         echo -e "$CSTART>>>>$ipaddr$CEND";
-        scp config/agent $ipaddr:/tmp/
+        scp config/agent2 $ipaddr:/tmp/
         ssh -n $ipaddr "cp /etc/zabbix/zabbix_agent2.conf /etc/zabbix/zabbix_agent2.conf.bak"
-        ssh -n $ipaddr "cp /tmp/agent /etc/zabbix/zabbix_agent2.conf"
+        ssh -n $ipaddr "cp /tmp/agent2 /etc/zabbix/zabbix_agent2.conf"
         ssh -n $ipaddr "sed -i 's/ZabbixServerIP/$ServerIP/g' /etc/zabbix/zabbix_agent2.conf"
         ssh -n $ipaddr 'sed -i "s/ZabbixClentHostname/$(hostname)/g" /etc/zabbix/zabbix_agent2.conf'
     done
