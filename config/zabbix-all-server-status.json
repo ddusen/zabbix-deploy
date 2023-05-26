@@ -3681,7 +3681,7 @@
           "queryType": "group"
         },
         "refresh": 1,
-        "regex": "/Zabbix|CDH|GP|K8s|Dolphin|DB|Other/",
+        "regex": "/Zabbix/PM|CDH|GP|K8s|Dolphin|DB|Other/",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
