@@ -31,7 +31,7 @@ function clean_zabbix_server() {
 
 # 清理 zabbix agent
 function clean_zabbix_agent() {
-    cat config/vm_info | while read ipaddr name passwd
+    cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
     do
         echo -e "$CSTART>>>>$ipaddr$CEND";
         ssh -n $ipaddr "yum remove -y zabbix*" || true

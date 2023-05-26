@@ -9,7 +9,7 @@ set -e
 source 00_env
 
 function remove_old_agent() {
-    cat config/vm_info | while read ipaddr name passwd
+    cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
     do
         # 不在zabbix server上安装agent
         if [[ "$ipaddr" == "$ServerIP" ]]; then
@@ -23,23 +23,36 @@ function remove_old_agent() {
 }
 
 function install_agent() {
-    cat config/vm_info | while read ipaddr name passwd
+    cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
     do 
         # 不在zabbix server上安装agent
         if [[ "$ipaddr" == "$ServerIP" ]]; then
             continue
         fi
         echo -e "$CSTART>>>>$ipaddr$CEND";
-        scp rpms/pcre2-10.23-2.el7.x86_64.rpm $ipaddr:/tmp/
-        scp rpms/zabbix-agent2-6.4.2-release1.el7.x86_64.rpm $ipaddr:/tmp/
+        system_version=$(ssh -n $ipaddr "cat /etc/centos-release | sed 's/ //g'")
+        echo -e "$CSTART>>>>$ipaddr>$system_version$CEND"
 
-        ssh -n $ipaddr "rpm -Uvh /tmp/pcre2-10.23-2.el7.x86_64.rpm" || true
-        ssh -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release1.el7.x86_64.rpm" || true
+        if [[ "$system_version" == RockyLinuxrelease8* ]]; then
+            scp rpms/rocky8/pcre2-10.32-3.el8.x86_64.rpm $ipaddr:/tmp/
+            scp rpms/rocky8/zabbix-agent2-6.4.2-release1.el8.x86_64.rpm $ipaddr:/tmp/
+
+            ssh -n $ipaddr "rpm -Uvh /tmp/pcre2-10.32-3.el8.x86_64.rpm" || true
+            ssh -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release1.el8.x86_64.rpm" || true
+        elif [[ "$system_version" == CentOSLinuxrelease7* ]]; then
+            scp rpms/centos7/pcre2-10.23-2.el7.x86_64.rpm $ipaddr:/tmp/
+            scp rpms/centos7/zabbix-agent2-6.4.2-release1.el7.x86_64.rpm $ipaddr:/tmp/
+
+            ssh -n $ipaddr "rpm -Uvh /tmp/pcre2-10.23-2.el7.x86_64.rpm" || true
+            ssh -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release1.el7.x86_64.rpm" || true
+        else 
+            echo "系统版本[$system_version]超出脚本处理范围" && false
+        fi
     done
 }
 
 function config_agent() {
-    cat config/vm_info | while read ipaddr name passwd
+    cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
     do 
         # 不在zabbix server上安装agent
         if [[ "$ipaddr" == "$ServerIP" ]]; then
@@ -55,7 +68,7 @@ function config_agent() {
 }
 
 function start_agent() {
-    cat config/vm_info | while read ipaddr name passwd
+    cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
     do 
         # 不在zabbix server上安装agent
         if [[ "$ipaddr" == "$ServerIP" ]]; then
