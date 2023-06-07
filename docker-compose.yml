@@ -75,7 +75,6 @@ services:
     ports:
       - 10051:10051
     volumes:
-      - zabbix-server-vol:/etc/zabbix
       - $ServerDataPath/zabbix/alertscripts:/usr/lib/zabbix/alertscripts
       - /etc/localtime:/etc/localtime
       - $ServerDataPath/zabbix/share:/data/zabbix/share
@@ -117,6 +116,3 @@ services:
 networks:
   zbx_net:
     driver: bridge
-
-volumes:
-  zabbix-server-vol:
