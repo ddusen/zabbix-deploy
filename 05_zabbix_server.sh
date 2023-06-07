@@ -12,6 +12,7 @@ source 00_env
 function config_server() {
     echo -e "$CSTART>>>>$(hostname -I)$CEND"
     mkdir -p $ServerDataPath/zabbix
+    mkdir -p $ServerDataPath/zabbix/conf
     mkdir -p $ServerDataPath/zabbix/fonts
     mkdir -p $ServerDataPath/zabbix/db
     mkdir -p $ServerDataPath/zabbix/alertscripts
@@ -22,6 +23,8 @@ function config_server() {
 
     chmod -R 777 $ServerDataPath/zabbix/share
     
+    cp config/server $ServerDataPath/zabbix/conf/zabbix_server.conf
+
     tar -zxvf $ZABBIX_PARCELS/msty.ttf.tar.gz -C /tmp/
     mv /tmp/msty.ttf $ServerDataPath/zabbix/fonts/DejaVuSans.ttf
 
