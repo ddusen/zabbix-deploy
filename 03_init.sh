@@ -90,16 +90,6 @@ function disable_selinux() {
     done
 }
 
-# 配置 limits.conf
-function config_limits() {
-    cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
-    do
-        echo -e "$CSTART>>>>$ipaddr$CEND"
-        ssh -n $ipaddr "ulimit -Hn 65536"
-        ssh -n $ipaddr "ulimit -n 65536"
-    done
-}
-
 # 配置 ssh
 function config_ssh() {
     cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
@@ -124,6 +114,27 @@ function config_network() {
     done
 }
 
+# 调优 sysctl
+function config_sysctl() {
+    cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
+    do
+        echo -e "$CSTART>>>>$ipaddr$CEND"
+        ssh -n $ipaddr "cp /etc/sysctl.conf /opt/backup/configs_$(date '+%Y%m%d')"
+        scp config/sysctl.conf $ipaddr:/etc/sysctl.conf
+        ssh -n $ipaddr "sysctl -p"
+    done
+}
+
+# 调优 limits
+function config_limits() {
+    cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
+    do
+        echo -e "$CSTART>>>>$ipaddr$CEND"
+        ssh -n $ipaddr "cp /etc/security/limits.conf /opt/backup/configs_$(date '+%Y%m%d')"
+        scp config/limits.conf $ipaddr:/etc/security/limits.conf
+    done
+}
+
 # 关闭 swap
 function disable_swap() {
     cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
@@ -131,8 +142,6 @@ function disable_swap() {
         echo -e "$CSTART>>>>$ipaddr$CEND"
         ssh -n $ipaddr "cp /etc/fstab /opt/backup/configs_$(date '+%Y%m%d')"
         ssh -n $ipaddr "sed -i '/swap / s/^\(.*\)$/#\1/g' /etc/fstab"
-        ssh -n $ipaddr "sed -i '/swappiness/d' /etc/sysctl.conf"
-        ssh -n $ipaddr "echo 'vm.swappiness=0' >> /etc/sysctl.conf"
         ssh -n $ipaddr "swapoff -a"
     done
 }
@@ -150,19 +159,22 @@ function main() {
     set_timezone
 
     echo -e "$CSTART>>disable_hugepage$CEND"
-    disable_hugepage
+    disable_hugepage || true
 
     echo -e "$CSTART>>disable_selinux$CEND"
     disable_selinux
-
-    echo -e "$CSTART>>config_limits$CEND"
-    config_limits
 
     echo -e "$CSTART>>config_ssh$CEND"
     config_ssh
 
     echo -e "$CSTART>>config_network$CEND"
     config_network
+
+    echo -e "$CSTART>>config_sysctl$CEND"
+    config_sysctl
+    
+    echo -e "$CSTART>>config_limits$CEND"
+    config_limits
 
     echo -e "$CSTART>>disable_swap$CEND"
     disable_swap
