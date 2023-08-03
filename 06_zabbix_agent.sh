@@ -31,9 +31,11 @@ function install_agent() {
 
         if [[ "$system_version" == RockyLinuxrelease8* ]]; then
             scp rpms/rocky8/pcre2-10.32-3.el8.x86_64.rpm $ipaddr:/tmp/
+            scp rpms/rocky8/pcre2-devel-10.32-3.el8_6.x86_64.rpm $ipaddr:/tmp/
             scp rpms/rocky8/zabbix-agent2-6.4.2-release1.el8.x86_64.rpm $ipaddr:/tmp/
 
             ssh -n $ipaddr "rpm -Uvh /tmp/pcre2-10.32-3.el8.x86_64.rpm" || true
+            ssh -n $ipaddr "rpm -Uvh /tmp/pcre2-devel-10.32-3.el8_6.x86_64.rpm" || true
             ssh -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release1.el8.x86_64.rpm" || true
         elif [[ "$system_version" == CentOSLinuxrelease7* ]]; then
             scp rpms/centos7/pcre2-10.23-2.el7.x86_64.rpm $ipaddr:/tmp/
