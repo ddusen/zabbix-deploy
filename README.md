@@ -19,7 +19,8 @@
 
 2. 把压缩包解压到 /opt 目录下
 ```bash
-tar -zxvf zabbix-parcels.6.0.16.20230508.tar.gz -C /opt/
+wget -O /opt/zabbix-parcels.6.0.16.20230508.tar.gz http://119.254.145.21:12225/owncloud/index.php/s/7csixr73eOy5Ihg/download
+tar -zxvf /opt/zabbix-parcels.6.0.16.20230508.tar.gz -C /opt/
 ```
 
 *****
