@@ -34,7 +34,7 @@ function clean_zabbix_server() {
 function clean_zabbix_agent() {
     cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
     do
-        echo -e "$CSTART>>>>$ipaddr$CEND";
+        echo -e "$CSTART>>>>$ipaddr [$(date +'%Y-%m-%d %H:%M:%S')]$CEND";
         ssh -n $ipaddr "yum remove -y zabbix*" || true
         ssh -n $ipaddr "rm -rf /etc/zabbix*" || true
         ssh -n $ipaddr "rm -rf /var/log/zabbix*" || true
