@@ -51,10 +51,28 @@ tar -zxvf /opt/zabbix-parcels.6.0.16.20230508.tar.gz -C /opt/
 ### 6. 安装 Zabbix Agent
 - [./06_zabbix_agent.sh](./06_zabbix_agent.sh)
 
+## 二、Zabbix 添加监控模版
+
+非常简单，只有两步，比把大象装进冰箱少一步。
+
+### 1. 在 zabbix server 端导入模版
+
+- "配置" -> "模版" -> "导入"
+
+![模版导入](./images/zabbix-server-templates-import.jpg)
+
+### 2. 在 zabbix agent 端配置指标采集
+
+- vim /etc/zabbix/zabbix_agent2.d/plugins.d/nvidia-smi.conf
+- systemctl restart zabbix-agent2
+
+![指标采集](./images/zabbix-agent-userparameter.jpg)
+
+
 *****
 
 ## 其它：
-1. docker 镜像导出
+### 1. docker 镜像导出
 ```bash
 docker save --output mysql.8.0.33.tar mysql:8.0.33
 docker save --output zabbix-web-nginx-mysql.6.0.16-centos.tar zabbix/zabbix-web-nginx-mysql:6.0.16-centos
@@ -78,7 +96,7 @@ mv zabbix-agent.6.0.16-centos.tar.gz /opt/zabbix-parcels
 mv grafana.9.5.1.tar.gz /opt/zabbix-parcels
 ```
 
-2. docker 镜像导入
+### 2. docker 镜像导入
 ```bash
 tar -zxvf /opt/zabbix-parcels/mysql.8.0.33.tar.gz -C /tmp/
 tar -zxvf /opt/zabbix-parcels/zabbix-web-nginx-mysql.6.0.16-centos.tar.gz -C /tmp/
@@ -95,14 +113,14 @@ docker load -i /tmp/zabbix-agent.6.0.16-centos.tar
 docker load -i /tmp/grafana.9.5.1.tar
 ```
 
-3. zabbix 地址
+### 3. zabbix 地址
 ```bash
 http://10.0.1.66:8080/
 Admin
 zabbix
 ```
 
-4. grafana 配置 zabbix
+### 4. grafana 配置 zabbix
 - zabbix api: http://10.0.0.155:8080/api_jsonrpc.php
 - grafana web: http://10.0.1.67:3000/d/zabbix/all-server-status
 ```bash
@@ -127,3 +145,4 @@ readonly
 - Docker compose 安装 zabbix： https://juejin.cn/post/7085020149761179661
 - Centos6 RPMS: http://bay.uchicago.edu/centos-vault/centos/6.10/os/x86_64/Packages/
 - Centos7/8 RPMS: https://centos.pkgs.org/
+- 官方社区模版库：https://github.com/zabbix/community-templates/
