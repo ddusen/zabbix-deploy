@@ -12,10 +12,10 @@ function remove_old_agent() {
     cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
     do
         echo -e "$CSTART>>>>$ipaddr [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
-        ssh -n $ipaddr "rm -rf ~/zabbix*" || true
-        ssh -n $ipaddr "yum remove -y zabbix*" || true
-        ssh -n $ipaddr "rm -rf /etc/zabbix*" || true
-        ssh -n $ipaddr "rm -rf /var/log/zabbix*" || true
+        ssh -tt -n $ipaddr "rm -rf ~/zabbix*" || true
+        ssh -tt -n $ipaddr "yum remove -y zabbix*" || true
+        ssh -tt -n $ipaddr "rm -rf /etc/zabbix*" || true
+        ssh -tt -n $ipaddr "rm -rf /var/log/zabbix*" || true
     done 
 }
 
@@ -27,7 +27,7 @@ function install_agent() {
             continue
         fi
         echo -e "$CSTART>>>>$ipaddr [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
-        system_version=$(ssh -n $ipaddr "cat /etc/centos-release | sed 's/ //g'")
+        system_version=$(ssh -tt -n $ipaddr "cat /etc/centos-release | sed 's/ //g'")
         echo -e "$CSTART>>>>$ipaddr>$system_version$CEND"
 
         if [[ "$system_version" == RockyLinuxrelease8* ]]; then
@@ -35,21 +35,21 @@ function install_agent() {
             scp rpms/rocky8/pcre2-10.32-3.el8.x86_64.rpm $ipaddr:/tmp
             scp rpms/rocky8/zabbix-agent2-6.4.2-release1.el8.x86_64.rpm $ipaddr:/tmp
 
-            ssh -n $ipaddr "rpm -Uvh /tmp/pcre2-devel-10.32-3.el8_6.x86_64.rpm" || true
-            ssh -n $ipaddr "rpm -Uvh /tmp/pcre2-10.32-3.el8.x86_64.rpm" || true
-            ssh -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release1.el8.x86_64.rpm" || true
+            ssh -tt -n $ipaddr "rpm -Uvh /tmp/pcre2-devel-10.32-3.el8_6.x86_64.rpm" || true
+            ssh -tt -n $ipaddr "rpm -Uvh /tmp/pcre2-10.32-3.el8.x86_64.rpm" || true
+            ssh -tt -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release1.el8.x86_64.rpm" || true
         elif [[ "$system_version" == CentOSLinuxrelease7* ]]; then
             scp rpms/centos7/pcre2-10.23-2.el7.x86_64.rpm $ipaddr:/tmp
             scp rpms/centos7/zabbix-agent2-6.4.2-release1.el7.x86_64.rpm $ipaddr:/tmp
 
-            ssh -n $ipaddr "rpm -Uvh /tmp/pcre2-10.23-2.el7.x86_64.rpm" || true
-            ssh -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release1.el7.x86_64.rpm" || true
+            ssh -tt -n $ipaddr "rpm -Uvh /tmp/pcre2-10.23-2.el7.x86_64.rpm" || true
+            ssh -tt -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release1.el7.x86_64.rpm" || true
         elif [[ "$system_version" == CentOSrelease6* ]]; then
             scp rpms/centos6/pcre-7.8-7.el6.x86_64.rpm $ipaddr:/tmp
             scp rpms/centos6/zabbix-agent2-6.4.2-release3.el6.x86_64.rpm $ipaddr:/tmp
 
-            ssh -n $ipaddr "rpm -Uvh /tmp/pcre-7.8-7.el6.x86_64.rpm" || true
-            ssh -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release3.el6.x86_64.rpm" || true
+            ssh -tt -n $ipaddr "rpm -Uvh /tmp/pcre-7.8-7.el6.x86_64.rpm" || true
+            ssh -tt -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release3.el6.x86_64.rpm" || true
         else 
             echo "系统版本[$system_version]超出脚本处理范围"
         fi
@@ -65,11 +65,11 @@ function config_agent() {
         fi
         echo -e "$CSTART>>>>$ipaddr [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
         scp config/agent2 $ipaddr:/tmp/
-        ssh -n $ipaddr "mkdir -p /etc/zabbix"
-        ssh -n $ipaddr "cp /etc/zabbix/zabbix_agent2.conf /etc/zabbix/zabbix_agent2.conf.bak" || true
-        ssh -n $ipaddr "cp /tmp/agent2 /etc/zabbix/zabbix_agent2.conf"
-        ssh -n $ipaddr "sed -i 's/ZabbixServerIP/$ServerIP/g' /etc/zabbix/zabbix_agent2.conf"
-        ssh -n $ipaddr 'sed -i "s/ZabbixClentHostname/$(hostname)/g" /etc/zabbix/zabbix_agent2.conf'
+        ssh -tt -n $ipaddr "mkdir -p /etc/zabbix"
+        ssh -tt -n $ipaddr "cp /etc/zabbix/zabbix_agent2.conf /etc/zabbix/zabbix_agent2.conf.bak" || true
+        ssh -tt -n $ipaddr "cp /tmp/agent2 /etc/zabbix/zabbix_agent2.conf"
+        ssh -tt -n $ipaddr "sed -i 's/ZabbixServerIP/$ServerIP/g' /etc/zabbix/zabbix_agent2.conf"
+        ssh -tt -n $ipaddr 'sed -i "s/ZabbixClentHostname/$(hostname)/g" /etc/zabbix/zabbix_agent2.conf'
     done
 }
 
@@ -81,16 +81,16 @@ function start_agent() {
             continue
         fi
         echo -e "$CSTART>>>>$ipaddr [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
-        system_version=$(ssh -n $ipaddr "cat /etc/centos-release | sed 's/ //g'")
+        system_version=$(ssh -tt -n $ipaddr "cat /etc/centos-release | sed 's/ //g'")
         echo -e "$CSTART>>>>$ipaddr>$system_version$CEND"
         if [[ "$system_version" == CentOSrelease6* ]]; then
-            ssh -n $ipaddr "service zabbix-agent2 start" || true
-            ssh -n $ipaddr "service zabbix-agent2 restart" || true
-            ssh -n $ipaddr "chkconfig --level 35 zabbix-agent2 on" || true
+            ssh -tt -n $ipaddr "service zabbix-agent2 start" || true
+            ssh -tt -n $ipaddr "service zabbix-agent2 restart" || true
+            ssh -tt -n $ipaddr "chkconfig --level 35 zabbix-agent2 on" || true
         else 
-            ssh -n $ipaddr "systemctl start zabbix-agent2" || true
-            ssh -n $ipaddr "systemctl restart zabbix-agent2" || true
-            ssh -n $ipaddr "systemctl enable zabbix-agent2" || true
+            ssh -tt -n $ipaddr "systemctl start zabbix-agent2" || true
+            ssh -tt -n $ipaddr "systemctl restart zabbix-agent2" || true
+            ssh -tt -n $ipaddr "systemctl enable zabbix-agent2" || true
         fi
     done
 }
