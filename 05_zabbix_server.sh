@@ -10,7 +10,7 @@ source 00_env
 
 # config zabbix
 function config_server() {
-    echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     mkdir -p $ServerDataPath/zabbix
     mkdir -p $ServerDataPath/zabbix/conf
     mkdir -p $ServerDataPath/zabbix/fonts
@@ -32,7 +32,7 @@ function config_server() {
 }
 
 function start_server() {
-    echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     docker-compose -f docker-compose.yml up -d
 }
 

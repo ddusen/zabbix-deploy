@@ -22,7 +22,7 @@ function identification() {
 
 # 清理 zabbix server
 function clean_zabbix_server() {
-    echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     docker-compose -f docker-compose.yml down
     rm -rf $ServerDataPath/zabbix/fonts
     rm -rf $ServerDataPath/zabbix/db

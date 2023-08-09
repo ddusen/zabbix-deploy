@@ -10,7 +10,7 @@ source 00_env
 
 # 安装 docker
 function install_docker() {
-    echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     # 需要把 docker-ce.rpm.tar.gz 放到 $ZABBIX_PARCELS 目录下
     mkdir -p /tmp/docker-ce/rpm
     tar -zxvf $ZABBIX_PARCELS/docker-ce.rpm.tar.gz -C /tmp/docker-ce/rpm/
@@ -20,7 +20,7 @@ function install_docker() {
 
 # 启动 docker
 function start_docker() {
-    echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     systemctl restart docker
     systemctl daemon-reload
     systemctl enable docker.service
@@ -28,14 +28,14 @@ function start_docker() {
 
 # 安装 docker compose
 function install_docker_compose() {
-    echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     tar -zxvf $ZABBIX_PARCELS/docker-compose.tar.gz -C /usr/local/bin/
     chmod +x /usr/local/bin/docker-compose
 }
 
 # load docker images
 function load_docker_images() {
-    echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     tar -zxvf /opt/zabbix-parcels/mysql.8.0.33.tar.gz -C /tmp/
     tar -zxvf /opt/zabbix-parcels/zabbix-web-nginx-mysql.6.0.16-centos.tar.gz -C /tmp/
     tar -zxvf /opt/zabbix-parcels/zabbix-server-mysql.6.0.16-centos.tar.gz -C /tmp/

@@ -10,13 +10,13 @@ source 00_env
 
 # 配置当前节点的 hosts
 function config_hosts() {
-    echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     cp config/hosts /etc/hosts
 }
 
 # 配置当前节点的 hostname
 function config_hostname() {
-    echo -e "$CSTART>>>>$(hostname -I)$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     echo "hostname=$ServerHostname" > /etc/sysconfig/network
     echo "$ServerHostname" > /etc/hostname
     hostnamectl set-hostname $ServerHostname
