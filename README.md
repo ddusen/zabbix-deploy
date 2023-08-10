@@ -51,7 +51,13 @@ tar -zxvf /opt/zabbix-parcels.6.0.16.20230508.tar.gz -C /opt/
 ### 6. 安装 Zabbix Agent
 - [./06_zabbix_agent.sh](./06_zabbix_agent.sh)
 
-## 二、Zabbix 添加监控模版
+## 二、Zabbix 配置自动注册
+
+自动注册：所有 agent 端，自动往 server 端发送数据，自动添加为监控主机
+
+![自动注册](./images/zabbix-autoregister.jpg)
+
+## 三、Zabbix 添加监控模版
 
 非常简单，只有两步，比把大象装进冰箱少一步。
 
