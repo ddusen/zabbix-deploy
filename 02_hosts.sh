@@ -12,6 +12,7 @@ source 00_env
 function config_hosts() {
     echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     cp config/hosts /etc/hosts
+    sed -i "s/TODO_SERVER_IP/$ServerIP/g" /etc/hosts
 }
 
 # 配置当前节点的 hostname

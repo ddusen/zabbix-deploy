@@ -1,26 +1,8 @@
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
-10.0.1.67 zabbix-server
-
-10.0.5.115 jxq-vm-ip5.115
-10.0.5.116 jxq-vm-ip5.116
-10.0.5.117 jxq-vm-ip5.117
-10.0.2.178 jxq-vm-ip2.178
-10.0.2.179 jxq-vm-ip2.179
-10.0.2.185 jxq-vm-ip2.185
-10.0.2.186 jxq-vm-ip2.186
-10.0.2.194 jxq-vm-ip2.194
-10.0.5.224 jxq-vm-ip5.224
-10.0.5.229 jxq-vm-ip5.229
-10.0.5.232 jxq-vm-ip5.232
-10.0.5.233 jxq-vm-ip5.233
-10.0.5.237 jxq-vm-ip5.237
-10.0.5.238 jxq-vm-ip5.238
-10.0.5.225 jxq-vm-ip5.225
-10.0.5.228 jxq-vm-ip5.228
-10.0.2.244 jxq-vm-ip2.244
-10.0.2.248 jxq-vm-ip2.248
-10.0.2.250 jxq-vm-ip2.250
-10.0.5.251 jxq-vm-ip5.251
-10.0.5.252 jxq-vm-ip5.252
+TODO_SERVER_IP zabbix-web
+TODO_SERVER_IP zabbix-mysql
+TODO_SERVER_IP zabbix-gateway
+TODO_SERVER_IP zabbix-server
+TODO_SERVER_IP zabbix-agent

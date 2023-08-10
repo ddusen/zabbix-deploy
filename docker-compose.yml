@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-  zabbix-web-nginx-mysql:
-    container_name: zabbix-web-nginx-mysql
+  zabbix-web:
+    container_name: zabbix-web
     image: zabbix/zabbix-web-nginx-mysql:6.0.16-centos
     restart: always
     environment:
@@ -19,10 +19,10 @@ services:
       - /etc/localtime:/etc/localtime
       - $ServerDataPath/zabbix/fonts/DejaVuSans.ttf:/usr/share/zabbix/assets/fonts/DejaVuSans.ttf
       - $ServerDataPath/zabbix/share:/data/zabbix/share
-    networks:
-      - zbx_net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     depends_on:
-      - zabbix-server-mysql
+      - zabbix-server
       - zabbix-mysql
   zabbix-mysql:
     container_name: zabbix-mysql
@@ -45,10 +45,10 @@ services:
       - /etc/localtime:/etc/localtime
       - $ServerDataPath/zabbix/db:/var/lib/mysql
       - $ServerDataPath/zabbix/share:/data/zabbix/share
-    networks:
-      - zbx_net
-  zabbix-java-gateway:
-    container_name: zabbix-java-gateway
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  zabbix-gateway:
+    container_name: zabbix-gateway
     image: zabbix/zabbix-java-gateway:6.0.16-centos
     restart: always
     environment:
@@ -56,10 +56,10 @@ services:
     volumes:
       - /etc/localtime:/etc/localtime
       - $ServerDataPath/zabbix/share:/data/zabbix/share
-    networks:
-      - zbx_net
-  zabbix-server-mysql:
-    container_name: zabbix-server-mysql
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  zabbix-server:
+    container_name: zabbix-server
     image: zabbix/zabbix-server-mysql:6.0.16-centos
     restart: always
     environment:
@@ -69,20 +69,28 @@ services:
       - MYSQL_USER=zabbix
       - MYSQL_PASSWORD=zabbix
       - MYSQL_ROOT_PASSWORD=zabbix123
-      - ZBX_JAVAGATEWAY=zabbix-java-gateway
+      - ZBX_JAVAGATEWAY=zabbix-gateway
       - ZBX_JAVAGATEWAY_ENABLE=true
       - ZBX_JAVAGATEWAYPORT=10052
+      - ZBX_DEBUGLEVEL=2
+      - ZBX_MAXHOUSEKEEPERDELETE=5000
+      - ZBX_STARTPOLLERS=15
+      - ZBX_CACHESIZE=1024M
+      - ZBX_STARTDBSYNCERS=4
+      - ZBX_HISTORYCACHESIZE=512M
+      - ZBX_TRENDCACHESIZE=256M
+      - ZBX_VALUECACHESIZE=256M
+      - ZBX_LOGSLOWQUERIES=3000
     ports:
       - 10051:10051
     volumes:
-      - $ServerDataPath/zabbix/conf:/etc/zabbix
       - $ServerDataPath/zabbix/alertscripts:/usr/lib/zabbix/alertscripts
       - /etc/localtime:/etc/localtime
       - $ServerDataPath/zabbix/share:/data/zabbix/share
     depends_on:
       - zabbix-mysql
-    networks:
-      - zbx_net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   zabbix-agent:
     container_name: zabbix-agent
     image: zabbix/zabbix-agent:6.0.16-centos
@@ -95,11 +103,11 @@ services:
       - ZBX_HOSTNAME=zabbix-server
       - ZBX_SERVER_HOST=zabbix-server-mysql
       - ZBX_SERVER_PORT=10051
-    networks:
-      - zbx_net
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   grafana:
+    container_name: grafana
     image: grafana/grafana:9.5.1
-    container_name: zabbix-grafana
     restart: always
     environment:
       - TZ=Asia/Shanghai
@@ -112,8 +120,5 @@ services:
       - $ServerDataPath/grafana/plugins:/var/lib/grafana/plugins
       - $ServerDataPath/grafana/datasources:/etc/grafana/provisioning/datasources      
       - $ServerDataPath/zabbix/share:/data/zabbix/share
-    networks:
-      - zbx_net
-networks:
-  zbx_net:
-    driver: bridge
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
