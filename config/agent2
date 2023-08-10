@@ -7,7 +7,6 @@ Server=ZabbixServerIP
 #ServerActive：注释该参数，表示开启“被动模式 server->agent”
 ServerActive=ZabbixServerIP
 RefreshActiveChecks=120
-Hostname=ZabbixClentHostname
 BufferSize=200
 Timeout=5
 
