@@ -17,8 +17,8 @@ services:
       - 8080:8080
     volumes:
       - /etc/localtime:/etc/localtime
-      - $ServerDataPath/zabbix/fonts/DejaVuSans.ttf:/usr/share/zabbix/assets/fonts/DejaVuSans.ttf
-      - $ServerDataPath/zabbix/share:/data/zabbix/share
+      - ${ServerDataPath:-/data}/zabbix/fonts/DejaVuSans.ttf:/usr/share/zabbix/assets/fonts/DejaVuSans.ttf
+      - ${ServerDataPath:-/data}/zabbix/share:/data/zabbix/share
     extra_hosts:
       - "host.docker.internal:host-gateway"
     depends_on:
@@ -43,8 +43,8 @@ services:
       - --collation-server=utf8mb4_bin
     volumes:
       - /etc/localtime:/etc/localtime
-      - $ServerDataPath/zabbix/db:/var/lib/mysql
-      - $ServerDataPath/zabbix/share:/data/zabbix/share
+      - ${ServerDataPath:-/data}/zabbix/db:/var/lib/mysql
+      - ${ServerDataPath:-/data}/zabbix/share:/data/zabbix/share
     extra_hosts:
       - "host.docker.internal:host-gateway"
   zabbix-gateway:
@@ -55,7 +55,7 @@ services:
       - TZ=Asia/Shanghai
     volumes:
       - /etc/localtime:/etc/localtime
-      - $ServerDataPath/zabbix/share:/data/zabbix/share
+      - ${ServerDataPath:-/data}/zabbix/share:/data/zabbix/share
     extra_hosts:
       - "host.docker.internal:host-gateway"
   zabbix-server:
@@ -84,9 +84,9 @@ services:
     ports:
       - 10051:10051
     volumes:
-      - $ServerDataPath/zabbix/alertscripts:/usr/lib/zabbix/alertscripts
+      - ${ServerDataPath:-/data}/zabbix/alertscripts:/usr/lib/zabbix/alertscripts
       - /etc/localtime:/etc/localtime
-      - $ServerDataPath/zabbix/share:/data/zabbix/share
+      - ${ServerDataPath:-/data}/zabbix/share:/data/zabbix/share
     depends_on:
       - zabbix-mysql
     extra_hosts:
@@ -116,9 +116,9 @@ services:
     user: '0'
     volumes:
       - /etc/localtime:/etc/localtime
-      - $ServerDataPath/grafana/data:/var/lib/grafana
-      - $ServerDataPath/grafana/plugins:/var/lib/grafana/plugins
-      - $ServerDataPath/grafana/datasources:/etc/grafana/provisioning/datasources      
-      - $ServerDataPath/zabbix/share:/data/zabbix/share
+      - ${ServerDataPath:-/data}/grafana/data:/var/lib/grafana
+      - ${ServerDataPath:-/data}/grafana/plugins:/var/lib/grafana/plugins
+      - ${ServerDataPath:-/data}/grafana/datasources:/etc/grafana/provisioning/datasources      
+      - ${ServerDataPath:-/data}/zabbix/share:/data/zabbix/share
     extra_hosts:
       - "host.docker.internal:host-gateway"

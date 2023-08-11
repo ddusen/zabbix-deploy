@@ -24,10 +24,10 @@ function identification() {
 function clean_zabbix_server() {
     echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     docker-compose -f docker-compose.yml down
-    rm -rf $ServerDataPath/zabbix/fonts
-    rm -rf $ServerDataPath/zabbix/db
-    rm -rf $ServerDataPath/zabbix/alertscripts
-    rm -rf $ServerDataPath/zabbix
+    rm -rf ${ServerDataPath:-/data}/zabbix/fonts
+    rm -rf ${ServerDataPath:-/data}/zabbix/db
+    rm -rf ${ServerDataPath:-/data}/zabbix/alertscripts
+    rm -rf ${ServerDataPath:-/data}/zabbix
 }
 
 # 清理 zabbix agent

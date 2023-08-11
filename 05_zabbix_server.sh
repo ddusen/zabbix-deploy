@@ -11,21 +11,21 @@ source 00_env
 # config zabbix
 function config_server() {
     echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
-    mkdir -p $ServerDataPath/zabbix
-    mkdir -p $ServerDataPath/zabbix/fonts
-    mkdir -p $ServerDataPath/zabbix/db
-    mkdir -p $ServerDataPath/zabbix/alertscripts
-    mkdir -p $ServerDataPath/zabbix/share
-    mkdir -p $ServerDataPath/grafana/data
-    mkdir -p $ServerDataPath/grafana/datasources
-    mkdir -p $ServerDataPath/grafana/plugins
+    mkdir -p ${ServerDataPath:-/data}/zabbix
+    mkdir -p ${ServerDataPath:-/data}/zabbix/fonts
+    mkdir -p ${ServerDataPath:-/data}/zabbix/db
+    mkdir -p ${ServerDataPath:-/data}/zabbix/alertscripts
+    mkdir -p ${ServerDataPath:-/data}/zabbix/share
+    mkdir -p ${ServerDataPath:-/data}/grafana/data
+    mkdir -p ${ServerDataPath:-/data}/grafana/datasources
+    mkdir -p ${ServerDataPath:-/data}/grafana/plugins
 
-    chmod -R 777 $ServerDataPath/zabbix/share
+    chmod -R 777 ${ServerDataPath:-/data}/zabbix/share
     
     tar -zxvf $ZABBIX_PARCELS/msty.ttf.tar.gz -C /tmp/
-    mv /tmp/msty.ttf $ServerDataPath/zabbix/fonts/DejaVuSans.ttf
+    mv /tmp/msty.ttf ${ServerDataPath:-/data}/zabbix/fonts/DejaVuSans.ttf
 
-    tar -zxvf $ZABBIX_PARCELS/alexanderzobnin-zabbix-app.tar.gz -C $ServerDataPath/grafana/plugins/
+    tar -zxvf $ZABBIX_PARCELS/alexanderzobnin-zabbix-app.tar.gz -C ${ServerDataPath:-/data}/grafana/plugins/
 }
 
 function start_server() {
