@@ -10,10 +10,9 @@ source 00_env
 
 # 安装一些基础软件，便于后续操作
 function install_base() {
-    echo -e "$CSTART>>>>$(hostname -I)>$system_version$CEND"
 
     system_version="$(cat /etc/centos-release | sed 's/ //g')"
-    echo -e "$CSTART>>>>$ipaddr>$system_version$CEND"
+    echo -e "$CSTART>>>>$(hostname -I)>$system_version [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
 
     if [[ "$system_version" == RockyLinuxrelease8* ]]; then
         cp rpms/rocky8/epel-release-8-19.el8.noarch.rpm /tmp/
@@ -62,13 +61,13 @@ function config_hostname() {
 
 # 备份一些配置文件
 function backup_configs() {
-    echo -e "$CSTART>>>>$(hostname -I)>$system_version$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     mkdir -p /opt/backup/configs_$(date '+%Y%m%d')
 }
 
 # 设置时区为 Asia/Shanghai
 function set_timezone() {
-    echo -e "$CSTART>>>>$(hostname -I)>$system_version$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     # 创建时区软链接
     ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime || true
     # 如果软链接已经存在，修改它，避免第一步失败
@@ -77,7 +76,7 @@ function set_timezone() {
 
 # 禁用 hugepage
 function disable_hugepage() {
-    echo -e "$CSTART>>>>$(hostname -I)>$system_version$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     grubby --update-kernel=ALL --args='transparent_hugepage=never'
     sed -i '/^#RemoveIPC=no/cRemoveIPC=no' /etc/systemd/logind.conf
     systemctl restart systemd-logind.service
@@ -85,7 +84,7 @@ function disable_hugepage() {
 
 # 关闭 selinux
 function disable_selinux() {
-    echo -e "$CSTART>>>>$(hostname -I)>$system_version$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     cp /etc/selinux/config /opt/backup/configs_$(date '+%Y%m%d')/etc_selinux_config
     sed -i '/^SELINUX=/cSELINUX=disabled' /etc/selinux/config
     setenforce 0 || true
@@ -93,7 +92,7 @@ function disable_selinux() {
 
 # 配置 ssh
 function config_ssh() {
-    echo -e "$CSTART>>>>$(hostname -I)>$system_version$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     cp /etc/ssh/sshd_config /opt/backup/configs_$(date '+%Y%m%d')/etc_ssh_sshd_config
     sed -i '/^#UseDNS/cUseDNS no' /etc/ssh/sshd_config
     sed -i '/^GSSAPIAuthentication/cGSSAPIAuthentication no' /etc/ssh/sshd_config
@@ -104,7 +103,7 @@ function config_ssh() {
 
 # 配置网络策略
 function config_network() {
-    echo -e "$CSTART>>>>$(hostname -I)>$system_version$CEND" 
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND" 
     chkconfig iptables off || true
     chkconfig ip6tables off || true
     chkconfig postfix off || true
@@ -118,7 +117,7 @@ function config_network() {
 
 # 调优 sysctl
 function config_sysctl() {
-    echo -e "$CSTART>>>>$(hostname -I)>$system_version$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     cp /etc/sysctl.conf /opt/backup/configs_$(date '+%Y%m%d')
     cp config/sysctl.conf /etc/sysctl.conf
     sysctl -p
@@ -126,14 +125,14 @@ function config_sysctl() {
 
 # 调优 limits
 function config_limits() {
-    echo -e "$CSTART>>>>$(hostname -I)>$system_version$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     cp /etc/security/limits.conf /opt/backup/configs_$(date '+%Y%m%d')
     cp config/limits.conf /etc/security/limits.conf
 }
 
 # 关闭 swap
 function disable_swap() {
-    echo -e "$CSTART>>>>$(hostname -I)>$system_version$CEND"
+    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
     cp /etc/fstab /opt/backup/configs_$(date '+%Y%m%d')
     sed -i '/swap / s/^\(.*\)$/#\1/g' /etc/fstab
     swapoff -a
