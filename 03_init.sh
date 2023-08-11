@@ -99,7 +99,7 @@ function config_ssh() {
     sed -i '/^GSSAPIAuthentication/cGSSAPIAuthentication no' /etc/ssh/sshd_config
     sed -i '/^GSSAPICleanupCredentials/cGSSAPICleanupCredentials no' /etc/ssh/sshd_config
     sed -i '/^#MaxStartups/cMaxStartups 10000:30:20000' /etc/ssh/sshd_config
-    systemctl restart sshd || true
+    systemctl restart sshd || service sshd restart || true
 }
 
 # 配置网络策略
