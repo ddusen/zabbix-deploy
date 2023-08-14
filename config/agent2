@@ -4,10 +4,10 @@ LogFile=/var/log/zabbix/zabbix_agent2.log
 
 LogFileSize=100
 Server=ZabbixServerIP
-#ServerActive：注释该参数，表示开启“被动模式 server->agent”
+
 ServerActive=ZabbixServerIP
+Hostname=ZabbixAgentIP
 RefreshActiveChecks=120
-BufferSize=200
 Timeout=5
 
 Include=/etc/zabbix/zabbix_agent2.d/*.conf
