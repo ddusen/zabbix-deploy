@@ -74,6 +74,14 @@ tar -zxvf /opt/zabbix-parcels.6.0.16.20230508.tar.gz -C /opt/
 
 ![指标采集](./images/zabbix-agent-userparameter.jpg)
 
+## 四、Zabbix 添加只读账号
+
+### 1. 添加只读用户群组
+![添加只读用户群组](./images/readonly-01.jpg)
+
+### 2. 添加只读用户，关联到只读群组，关联到Guest role权限
+![关联到只读群组](./images/readonly-02.jpg)
+![关联到Guest role权限](./images/readonly-03.jpg)
 
 *****
 
