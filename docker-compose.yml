@@ -41,7 +41,8 @@ services:
       - --default-authentication-plugin=mysql_native_password
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_bin
-      - --max_connections=1000
+      - --max_connections=512
+      - --skip-log-bin
     volumes:
       - /etc/localtime:/etc/localtime
       - ${ServerDataPath:-/data}/zabbix/db:/var/lib/mysql
@@ -74,14 +75,6 @@ services:
       - ZBX_JAVAGATEWAY_ENABLE=true
       - ZBX_JAVAGATEWAYPORT=10052
       - ZBX_DEBUGLEVEL=2
-      - ZBX_MAXHOUSEKEEPERDELETE=5000
-      - ZBX_STARTPOLLERS=10
-      - ZBX_STARTTRAPPERS=200
-      - ZBX_CACHESIZE=2G
-      - ZBX_HISTORYCACHESIZE=512M
-      - ZBX_TRENDCACHESIZE=256M
-      - ZBX_VALUECACHESIZE=1G
-      - ZBX_LOGSLOWQUERIES=3000
     ports:
       - 10051:10051
     volumes:
