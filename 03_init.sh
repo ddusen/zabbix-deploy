@@ -103,16 +103,13 @@ function config_ssh() {
 
 # 配置网络策略
 function config_network() {
-    echo -e "$CSTART>>>>$(hostname -I) [$(date +'%Y-%m-%d %H:%M:%S')]$CEND" 
-    chkconfig iptables off || true
-    chkconfig ip6tables off || true
-    chkconfig postfix off || true
-    systemctl disable postfix || true
-    systemctl disable libvirtd || true
-    systemctl disable firewalld || true
-    systemctl stop postfix || true
-    systemctl stop libvirtd || true
-    systemctl stop firewalld || true
+    cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
+    do
+        echo -e "$CSTART>>>>$ipaddr [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
+        ssh -n $ipaddr "chkconfig iptables off; chkconfig ip6tables off; chkconfig postfix off" || true
+        ssh -n $ipaddr "systemctl disable postfix; systemctl disable libvirtd; systemctl disable firewalld" || true
+        ssh -n $ipaddr "systemctl stop postfix; systemctl stop libvirtd; systemctl stop firewalld" || true
+    done
 }
 
 # 调优 sysctl
