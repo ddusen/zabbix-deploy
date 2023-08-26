@@ -22,10 +22,6 @@ function remove_old_agent() {
 function install_agent() {
     cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
     do 
-        # 不在zabbix server上安装agent
-        if [[ "$ipaddr" == "$ServerIP" ]]; then
-            continue
-        fi
         echo -e "$CSTART>>>>$ipaddr [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
         system_version=$(ssh -tt -n $ipaddr "cat /etc/centos-release | sed 's/ //g'")
         echo -e "$CSTART>>>>$ipaddr>$system_version$CEND"
@@ -59,10 +55,6 @@ function install_agent() {
 function config_agent() {
     cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
     do 
-        # 不在zabbix server上安装agent
-        if [[ "$ipaddr" == "$ServerIP" ]]; then
-            continue
-        fi
         echo -e "$CSTART>>>>$ipaddr [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
         scp config/agent2 $ipaddr:/tmp/
         ssh -tt -n $ipaddr "mkdir -p /etc/zabbix"
@@ -76,10 +68,6 @@ function config_agent() {
 function start_agent() {
     cat config/vm_info | grep -v "^#" | grep -v "^$" | while read ipaddr name passwd
     do 
-        # 不在zabbix server上安装agent
-        if [[ "$ipaddr" == "$ServerIP" ]]; then
-            continue
-        fi
         echo -e "$CSTART>>>>$ipaddr [$(date +'%Y-%m-%d %H:%M:%S')]$CEND"
         system_version=$(ssh -tt -n $ipaddr "cat /etc/centos-release | sed 's/ //g'")
         echo -e "$CSTART>>>>$ipaddr>$system_version$CEND"

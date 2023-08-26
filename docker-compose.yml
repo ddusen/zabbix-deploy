@@ -86,20 +86,6 @@ services:
       - zabbix-mysql
     networks:
       - zbx_net
-  zabbix-agent:
-    container_name: zabbix-agent
-    image: zabbix/zabbix-agent:6.4.6-centos
-    restart: always
-    environment:
-      - TZ=Asia/Shanghai
-    ports:
-      - 10050:10050
-    environment:
-      - ZBX_HOSTNAME=zabbix-server
-      - ZBX_SERVER_HOST=zabbix-server
-      - ZBX_SERVER_PORT=10051
-    networks:
-      - zbx_net
   grafana:
     container_name: grafana
     image: grafana/grafana:10.0.3-ubuntu
