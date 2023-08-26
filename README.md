@@ -14,12 +14,12 @@
 ## 前提
 
 1. 从公司云盘下载软件包 zabbix-parcels.6.4.6.20230826.tar.gz 到脚本执行机器中。
-- http://119.254.145.21:12225/owncloud/index.php/s/7csixr73eOy5Ihg
+- http://119.254.145.21:12225/owncloud/index.php/s/A8p9hDrq08sH1en
 - 如果网盘链接失效，去网盘目录下找该包：03-大数据/02-Zabbix/zabbix-parcels.6.4.6.20230826.tar.gz
 
 2. 把压缩包解压到 /opt 目录下
 ```bash
-wget -O /opt/zabbix-parcels.6.4.6.20230826.tar.gz http://119.254.145.21:12225/owncloud/index.php/s/7csixr73eOy5Ihg/download
+wget -O /opt/zabbix-parcels.6.4.6.20230826.tar.gz http://119.254.145.21:12225/owncloud/index.php/s/A8p9hDrq08sH1en/download
 tar -zxvf /opt/zabbix-parcels.6.4.6.20230826.tar.gz -C /opt/
 ```
 
