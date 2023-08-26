@@ -29,23 +29,23 @@ function install_agent() {
         if [[ "$system_version" == RockyLinuxrelease8* ]]; then
             scp rpms/rocky8/pcre2-devel-10.32-3.el8_6.x86_64.rpm $ipaddr:/tmp
             scp rpms/rocky8/pcre2-10.32-3.el8.x86_64.rpm $ipaddr:/tmp
-            scp rpms/rocky8/zabbix-agent2-6.4.2-release1.el8.x86_64.rpm $ipaddr:/tmp
+            scp rpms/rocky8/zabbix-agent2-*.el8.x86_64.rpm $ipaddr:/tmp
 
             ssh -tt -n $ipaddr "rpm -Uvh /tmp/pcre2-devel-10.32-3.el8_6.x86_64.rpm" || true
             ssh -tt -n $ipaddr "rpm -Uvh /tmp/pcre2-10.32-3.el8.x86_64.rpm" || true
-            ssh -tt -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release1.el8.x86_64.rpm" || true
+            ssh -tt -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-*.el8.x86_64.rpm" || true
         elif [[ "$system_version" == CentOSLinuxrelease7* ]]; then
             scp rpms/centos7/pcre2-10.23-2.el7.x86_64.rpm $ipaddr:/tmp
-            scp rpms/centos7/zabbix-agent2-6.4.2-release1.el7.x86_64.rpm $ipaddr:/tmp
+            scp rpms/centos7/zabbix-agent2-*.el7.x86_64.rpm $ipaddr:/tmp
 
             ssh -tt -n $ipaddr "rpm -Uvh /tmp/pcre2-10.23-2.el7.x86_64.rpm" || true
-            ssh -tt -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release1.el7.x86_64.rpm" || true
+            ssh -tt -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-*.el7.x86_64.rpm" || true
         elif [[ "$system_version" == CentOSrelease6* ]]; then
             scp rpms/centos6/pcre-7.8-7.el6.x86_64.rpm $ipaddr:/tmp
-            scp rpms/centos6/zabbix-agent2-6.4.2-release3.el6.x86_64.rpm $ipaddr:/tmp
+            scp rpms/centos6/zabbix-agent2-*.el6.x86_64.rpm $ipaddr:/tmp
 
             ssh -tt -n $ipaddr "rpm -Uvh /tmp/pcre-7.8-7.el6.x86_64.rpm" || true
-            ssh -tt -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-6.4.2-release3.el6.x86_64.rpm" || true
+            ssh -tt -n $ipaddr "rpm -Uvh /tmp/zabbix-agent2-*.el6.x86_64.rpm" || true
         else 
             echo "系统版本[$system_version]超出脚本处理范围"
         fi
