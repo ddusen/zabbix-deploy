@@ -3,7 +3,7 @@ version: '3'
 services:
   zabbix-web:
     container_name: zabbix-web
-    image: zabbix/zabbix-web-nginx-mysql:6.0.16-centos
+    image: zabbix/zabbix-web-nginx-mysql:6.4.6-centos
     restart: always
     environment:
       - TZ=Asia/Shanghai
@@ -51,7 +51,7 @@ services:
       - zbx_net
   zabbix-gateway:
     container_name: zabbix-gateway
-    image: zabbix/zabbix-java-gateway:6.0.16-centos
+    image: zabbix/zabbix-java-gateway:6.4.6-centos
     restart: always
     environment:
       - TZ=Asia/Shanghai
@@ -62,7 +62,7 @@ services:
       - zbx_net
   zabbix-server:
     container_name: zabbix-server
-    image: zabbix/zabbix-server-mysql:6.0.16-centos
+    image: zabbix/zabbix-server-mysql:6.4.6-centos
     restart: always
     environment:
       - TZ=Asia/Shanghai
@@ -88,7 +88,7 @@ services:
       - zbx_net
   zabbix-agent:
     container_name: zabbix-agent
-    image: zabbix/zabbix-agent:6.0.16-centos
+    image: zabbix/zabbix-agent:6.4.6-centos
     restart: always
     environment:
       - TZ=Asia/Shanghai
@@ -102,7 +102,7 @@ services:
       - zbx_net
   grafana:
     container_name: grafana
-    image: grafana/grafana:9.5.1
+    image: grafana/grafana:10.0.3-ubuntu
     restart: always
     environment:
       - TZ=Asia/Shanghai
