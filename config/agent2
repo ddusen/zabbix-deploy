@@ -6,7 +6,6 @@ LogFileSize=100
 Server=ZabbixServerIP
 
 ServerActive=ZabbixServerIP
-Hostname=ZabbixAgentIP
 RefreshActiveChecks=120
 Timeout=5
 

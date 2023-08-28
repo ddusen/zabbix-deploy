@@ -61,7 +61,6 @@ function config_agent() {
         ssh -tt -n $ipaddr "cp /etc/zabbix/zabbix_agent2.conf /etc/zabbix/zabbix_agent2.conf.bak" || true
         ssh -tt -n $ipaddr "cp /tmp/agent2 /etc/zabbix/zabbix_agent2.conf"
         ssh -tt -n $ipaddr "sed -i 's/ZabbixServerIP/$ServerIP/g' /etc/zabbix/zabbix_agent2.conf"
-        ssh -tt -n $ipaddr "sed -i 's/ZabbixAgentIP/$ipaddr/g' /etc/zabbix/zabbix_agent2.conf"
     done
 }
 
